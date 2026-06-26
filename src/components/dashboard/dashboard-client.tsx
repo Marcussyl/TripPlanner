@@ -1,19 +1,16 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { InviteExplorer } from '@/components/trip/invite-explorer';
 import { TopAppBar } from '@/components/trip/top-app-bar';
 import { LoadingState } from '@/components/ui/loading-state';
 import { TripHeroCard } from '@/components/dashboard/trip-hero-card';
 import { OnlineNowPill } from '@/components/dashboard/online-now-pill';
-import { UpNextList } from '@/components/dashboard/up-next-list';
 import { QuickIdeasPanel } from '@/components/dashboard/quick-ideas-panel';
 import { BudgetSnapshotCard } from '@/components/dashboard/budget-snapshot-card';
 import { useTripPrivateChannel } from '@/hooks/use-trip-private-channel';
 
 type DashboardClientProps = {
   tripId: string;
-  isOwner: boolean;
   initialTrip: {
     name: string;
     destination: string;
@@ -23,7 +20,7 @@ type DashboardClientProps = {
   };
 };
 
-export function DashboardClient({ tripId, isOwner, initialTrip }: DashboardClientProps) {
+export function DashboardClient({ tripId, initialTrip }: DashboardClientProps) {
   const [trip] = useState(initialTrip);
   const [activities, setActivities] = useState<
     Array<{
@@ -31,6 +28,7 @@ export function DashboardClient({ tripId, isOwner, initialTrip }: DashboardClien
       title: string;
       startTime: string | null;
       type: string;
+      notes?: string | null;
       day?: { dayNumber: number; label: string | null };
     }>
   >([]);
@@ -91,24 +89,23 @@ export function DashboardClient({ tripId, isOwner, initialTrip }: DashboardClien
     <div className="flex flex-1 flex-col">
       <TopAppBar
         title="Dashboard"
-        subtitle="Trip overview and what is happening next"
+        subtitle={`Planning '${trip.name}'`}
         actions={<OnlineNowPill tripId={tripId} />}
       />
-      <div className="grid grid-cols-12 gap-6 p-8">
-        <div className="col-span-12 space-y-6 lg:col-span-8">
-          <TripHeroCard trip={trip} tripId={tripId} />
-          <UpNextList tripId={tripId} activities={activities} />
-          {isOwner && <InviteExplorer tripId={tripId} isOwner />}
-        </div>
-        <div className="col-span-12 space-y-6 lg:col-span-4">
+      <div className="grid grid-cols-1 gap-gutter p-6 lg:grid-cols-12 lg:p-10">
+        <section className="lg:col-span-8">
+          <TripHeroCard trip={trip} tripId={tripId} activities={activities} />
+        </section>
+
+        <section className="flex flex-col gap-gutter lg:col-span-4">
+          <QuickIdeasPanel tripId={tripId} pins={pins} />
           <BudgetSnapshotCard
             tripId={tripId}
             totalSpent={summary?.totalSpent ?? 0}
             budgetLimit={summary?.budgetLimit ?? null}
             byCategory={summary?.byCategory ?? {}}
           />
-          <QuickIdeasPanel tripId={tripId} pins={pins} />
-        </div>
+        </section>
       </div>
     </div>
   );

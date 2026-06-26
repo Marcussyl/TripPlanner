@@ -39,16 +39,16 @@ export default async function TripLayout({ children, params }: TripLayoutProps) 
     notFound();
   }
 
-  const sidebarMembers = trip.members.map((m) => m.user);
+  const isOwner = member.role === 'owner';
 
   return (
-    <div className="flex min-h-screen bg-surface">
+    <div className="flex min-h-screen bg-background">
       <div className="hidden lg:flex">
         <TripSidebar
           tripId={trip.id}
           tripName={trip.name}
           memberCount={trip.members.length}
-          members={sidebarMembers}
+          isOwner={isOwner}
         />
       </div>
       <div className="flex min-h-screen flex-1 flex-col">{children}</div>

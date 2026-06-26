@@ -16,17 +16,24 @@ type QuickIdeasPanelProps = {
 
 export function QuickIdeasPanel({ tripId, pins }: QuickIdeasPanelProps) {
   return (
-    <section className="rounded-3xl border border-outline-variant/60 bg-surface-container-lowest p-6">
-      <div className="flex items-center justify-between gap-4">
-        <h3 className="text-headline-md text-on-background">Quick ideas</h3>
-        <Link href={`/trips/${tripId}/group-hub`} className="text-label-md text-primary">
-          Open canvas
+    <section className="relative flex-grow overflow-hidden rounded-3xl border border-outline-variant/30 bg-surface-container-lowest p-6 shadow-level-2">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary">lightbulb</span>
+          <h3 className="text-headline-md text-on-background">Quick ideas</h3>
+        </div>
+        <Link
+          href={`/trips/${tripId}/group-hub`}
+          className="rounded-full p-1 text-secondary transition-colors hover:bg-surface-container-low hover:text-primary"
+        >
+          <span className="material-symbols-outlined">add</span>
         </Link>
       </div>
+
       {pins.length === 0 ? (
-        <p className="mt-4 text-body-md text-on-surface-variant">No ideas pinned yet.</p>
+        <p className="text-body-md text-on-surface-variant">No ideas pinned yet.</p>
       ) : (
-        <div className="mt-4 space-y-3">
+        <div className="space-y-3">
           {pins.slice(0, 3).map((pin) =>
             pin.type === 'link' ? (
               <LinkPinCard key={pin.id} content={pin.content} authorName={pin.createdBy.name} />
@@ -36,6 +43,14 @@ export function QuickIdeasPanel({ tripId, pins }: QuickIdeasPanelProps) {
           )}
         </div>
       )}
+
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-5"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, #1c1b1b 1px, transparent 0)',
+          backgroundSize: '24px 24px',
+        }}
+      />
     </section>
   );
 }

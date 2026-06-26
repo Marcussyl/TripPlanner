@@ -1,15 +1,23 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { EmptyState } from '@/components/ui/empty-state';
 import { ErrorState } from '@/components/ui/error-state';
-import { Input } from '@/components/ui/input';
 import { LoadingState } from '@/components/ui/loading-state';
-import { Chip } from '@/components/ui/chip';
+import { TripsTopNav } from '@/components/trips/trips-top-nav';
+import { TripCard } from '@/components/trips/trip-card';
+import { CollaborateBanner } from '@/components/trips/collaborate-banner';
+import { CreateTripDialog } from '@/components/trips/create-trip-dialog';
+
+type TripMember = {
+  user: {
+    id: string;
+    name: string | null;
+    image: string | null;
+    avatarUrl: string | null;
+  };
+};
 
 type TripSummary = {
   id: string;
@@ -17,23 +25,16 @@ type TripSummary = {
   destination: string;
   startDate: string;
   endDate: string;
+  coverImage?: string | null;
+  members: TripMember[];
   _count: { members: number };
 };
 
 export default function TripsPage() {
-  const router = useRouter();
   const [trips, setTrips] = useState<TripSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    name: '',
-    destination: '',
-    startDate: '',
-    endDate: '',
-    budgetLimit: '',
-  });
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
 
   const loadTrips = useCallback(async () => {
     setLoading(true);
@@ -54,139 +55,36 @@ export default function TripsPage() {
     loadTrips();
   }, [loadTrips]);
 
-  const handleCreate = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setSubmitting(true);
-    setError(null);
-
-    try {
-      const res = await fetch('/api/trips', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          destination: form.destination,
-          startDate: new Date(form.startDate).toISOString(),
-          endDate: new Date(form.endDate).toISOString(),
-          budgetLimit: form.budgetLimit ? Number(form.budgetLimit) : undefined,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error ?? 'Failed to create trip');
+  const uniqueMemberCount = useMemo(() => {
+    const ids = new Set<string>();
+    for (const trip of trips) {
+      for (const member of trip.members) {
+        ids.add(member.user.id);
       }
-
-      const data = await res.json();
-      router.push(`/trips/${data.trip.id}/dashboard`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create trip');
-    } finally {
-      setSubmitting(false);
     }
-  };
+    return ids.size;
+  }, [trips]);
 
   return (
-    <main className="min-h-screen bg-surface px-margin-mobile py-10 lg:px-margin-desktop">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8 flex items-center justify-between gap-4">
+    <div className="min-h-screen bg-background">
+      <TripsTopNav />
+
+      <main className="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-12">
+        <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-label-sm uppercase tracking-widest text-primary">TripSync</p>
-            <h1 className="text-headline-lg text-on-background">Your trips</h1>
-            <p className="mt-2 text-body-md text-on-surface-variant">
+            <h1 className="mt-2 text-display-lg text-on-background">Your trips</h1>
+            <p className="mt-3 max-w-xl text-body-lg text-on-surface-variant">
               Create a workspace and invite your travel crew.
             </p>
           </div>
-          <Button onClick={() => setShowForm((v) => !v)}>
+          <Button size="lg" onClick={() => setShowCreateDialog(true)} className="shrink-0">
             <span className="material-symbols-outlined text-[20px]">add</span>
             New trip
           </Button>
         </div>
 
-        {showForm && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Create a trip</CardTitle>
-              <CardDescription>Set the basics for your shared workspace.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="grid gap-4 md:grid-cols-2" onSubmit={handleCreate}>
-                <div className="space-y-2">
-                  <label className="text-label-md" htmlFor="name">
-                    Trip name
-                  </label>
-                  <Input
-                    id="name"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                    placeholder="Summer in Tokyo"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-label-md" htmlFor="destination">
-                    Destination
-                  </label>
-                  <Input
-                    id="destination"
-                    required
-                    value={form.destination}
-                    onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))}
-                    placeholder="Tokyo, Japan"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-label-md" htmlFor="startDate">
-                    Start date
-                  </label>
-                  <Input
-                    id="startDate"
-                    type="date"
-                    required
-                    value={form.startDate}
-                    onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-label-md" htmlFor="endDate">
-                    End date
-                  </label>
-                  <Input
-                    id="endDate"
-                    type="date"
-                    required
-                    value={form.endDate}
-                    onChange={(e) => setForm((f) => ({ ...f, endDate: e.target.value }))}
-                  />
-                </div>
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-label-md" htmlFor="budgetLimit">
-                    Budget limit (optional)
-                  </label>
-                  <Input
-                    id="budgetLimit"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={form.budgetLimit}
-                    onChange={(e) => setForm((f) => ({ ...f, budgetLimit: e.target.value }))}
-                    placeholder="5000"
-                  />
-                </div>
-                <div className="flex gap-3 md:col-span-2">
-                  <Button type="submit" disabled={submitting}>
-                    {submitting ? 'Creating...' : 'Create trip'}
-                  </Button>
-                  <Button type="button" variant="secondary" onClick={() => setShowForm(false)}>
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        )}
-
-        {error && <ErrorState message={error} onRetry={loadTrips} />}
+        {error && <div className="mb-8"><ErrorState message={error} onRetry={loadTrips} /></div>}
 
         {loading ? (
           <LoadingState label="Loading your trips..." />
@@ -195,32 +93,31 @@ export default function TripsPage() {
             title="No trips yet"
             description="Start your first collaborative adventure. Create a trip and invite friends to plan together."
             actionLabel="Create your first trip"
-            onAction={() => setShowForm(true)}
+            onAction={() => setShowCreateDialog(true)}
           />
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {trips.map((trip) => (
-              <Link key={trip.id} href={`/trips/${trip.id}/dashboard`}>
-                <Card className="transition-shadow hover:shadow-level-3">
-                  <CardHeader>
-                    <div className="flex items-start justify-between gap-3">
-                      <CardTitle>{trip.name}</CardTitle>
-                      <Chip>{trip._count.members} members</Chip>
-                    </div>
-                    <CardDescription>{trip.destination}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-body-md text-on-surface-variant">
-                      {new Date(trip.startDate).toLocaleDateString()} –{' '}
-                      {new Date(trip.endDate).toLocaleDateString()}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <>
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {trips.map((trip, index) => (
+                <TripCard key={trip.id} trip={trip} index={index} />
+              ))}
+            </div>
+
+            <div className="mt-12">
+              <CollaborateBanner
+                uniqueMemberCount={uniqueMemberCount}
+                onInviteClick={() => setShowCreateDialog(true)}
+              />
+            </div>
+          </>
         )}
-      </div>
-    </main>
+      </main>
+
+      <CreateTripDialog
+        open={showCreateDialog}
+        onOpenChange={setShowCreateDialog}
+        onError={setError}
+      />
+    </div>
   );
 }
