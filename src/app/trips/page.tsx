@@ -87,7 +87,7 @@ export default function TripsPage() {
         {error && <div className="mb-8"><ErrorState message={error} onRetry={loadTrips} /></div>}
 
         {loading ? (
-          <LoadingState label="Loading your trips..." />
+          <LoadingState label="Loading your trips..." variant="inline" />
         ) : trips.length === 0 ? (
           <EmptyState
             title="No trips yet"
