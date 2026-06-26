@@ -56,90 +56,197 @@ flowchart TB
 
 ## 2. Core Features
 
-Features below are derived directly from UI prototypes in [`UI/`](UI/). Prototypes are split by viewport:
+Features below are extracted from UI prototypes in [`UI/desktop/`](UI/desktop/) and [`UI/mobile/`](UI/mobile/). Each page documents **UI sections → included features**, plus **desktop vs mobile** differences where the prototypes diverge.
 
-| Viewport | Path | Screens |
-|----------|------|---------|
-| **Desktop** | [`UI/desktop/`](UI/desktop/) | `trip_dashboard`, `itinerary_planner`, `group_hub`, `budget_tracker` |
-| **Mobile** | [`UI/mobile/`](UI/mobile/) | `trip_dashboard_mobile`, `itinerary_planner_mobile`, `group_hub_mobile`, `budget_tracker_mobile` |
+### Prototype Index
 
-Mobile layouts add a fixed **bottom tab bar** for primary navigation; desktop layouts use a persistent **left sidebar**. Feature parity is maintained across both sets unless noted.
+| Page | Desktop | Mobile |
+|------|---------|--------|
+| Trip Dashboard | [`trip_dashboard/code.html`](UI/desktop/trip_dashboard/code.html) | [`trip_dashboard_mobile/code.html`](UI/mobile/trip_dashboard_mobile/code.html) |
+| Itinerary Planner | [`itinerary_planner/code.html`](UI/desktop/itinerary_planner/code.html) | [`itinerary_planner_mobile/code.html`](UI/mobile/itinerary_planner_mobile/code.html) |
+| Group Hub | [`group_hub/code.html`](UI/desktop/group_hub/code.html) | [`group_hub_mobile/code.html`](UI/mobile/group_hub_mobile/code.html) |
+| Budget Tracker | [`budget_tracker/code.html`](UI/desktop/budget_tracker/code.html) | [`budget_tracker_mobile/code.html`](UI/mobile/budget_tracker_mobile/code.html) |
 
-### 2.1 Dashboard
+**Shared navigation pattern**
 
-**Reference:** [`UI/desktop/trip_dashboard/code.html`](UI/desktop/trip_dashboard/code.html) · [`UI/mobile/trip_dashboard_mobile/code.html`](UI/mobile/trip_dashboard_mobile/code.html)
+| Viewport | Primary nav | Trip context |
+|----------|-------------|--------------|
+| Desktop | Fixed left sidebar — Dashboard, Itinerary, Budget, Group Hub | Trip name, collaborator count, live avatars, Invite Explorer, Settings, Support |
+| Mobile | Fixed bottom tab bar — same four modules | Trip name in top bar; compact avatar + notifications |
 
-| Feature | Description |
-|---------|-------------|
-| Trip hero card | Cover image, destination tag (e.g. Japan), date range (e.g. Aug 12–24) |
-| Up Next preview | Next scheduled items (e.g. arrival at HND, hotel check-in) with type chips (FLIGHT, etc.) |
-| Quick Ideas | Bucket-list items with category tags (DINING, SIGHTSEEING, ACTIVITY), vote counts, comment counts |
-| Group Budget summary | Progress bar showing allocated vs. limit (e.g. $4,250 / $5k, 85%) |
-| Online presence | "Online Now" collaborator avatars with live indicators |
-| Invite Explorer | CTA to invite new trip members |
-| Open Full Itinerary | Navigate to the full itinerary planner |
+---
+
+### 2.1 Trip Dashboard
+
+**Purpose:** At-a-glance trip home — what's next, budget health, and ideas needing group input.
+
+#### Page sections & features
+
+| UI Section | Features |
+|------------|----------|
+| **Page header** | Page title ("Dashboard"); trip subtitle ("Planning 'Summer in Tokyo'") — desktop only |
+| **Online presence** | "Online Now" collaborator avatars with green status dots; overflow count (+2); live pulse indicator — desktop |
+| **Trip hero card** | Full-width cover image with gradient overlay; destination tag (e.g. Japan); date range chip (e.g. Aug 12–24); trip title on hero |
+| **Up Next** | Next 1–2 scheduled activities with icon, time, title, notes, type chip (FLIGHT, etc.); hover shows collaborator cursor (desktop); link to full itinerary |
+| **Quick Ideas** | Idea list with category tags; social signals (votes, comments); add new idea |
+| **Group Budget** | Spent vs limit (e.g. $4,250 / $5k); progress bar; allocation percentage |
+
+#### Desktop-specific ([`trip_dashboard`](UI/desktop/trip_dashboard/code.html))
+
+- Two-column layout: hero + Up Next (8 cols) | Quick Ideas + Budget summary (4 cols)
+- Up Next shows multiple items in a scrollable list inside the hero card
+- Quick Ideas: checkbox-style items, thumb_up vote count, chat_bubble comment count
+- Side nav includes Invite Explorer, Settings, Support
+- Mobile-only top bar (TripSync logo) when viewport is narrow
+
+#### Mobile-specific ([`trip_dashboard_mobile`](UI/mobile/trip_dashboard_mobile/code.html))
+
+- Stacked single-column layout; hero includes inline **"2 online"** badge on cover
+- **Up Next** as a dedicated card: time badge (14:30 JST), meeting point text, attendee avatars, **View Details** + **Directions** actions
+- **Group Budget** card adds **Remaining: $750** and **4 Days Left**
+- **Quick Ideas** redesigned for voting: thumbnail images, category + price tags ($$$, Free), **upvote** buttons with counts, **"Needs Votes"** status badge, **Add Idea** CTA
+- Top bar: user avatar + trip name + notifications (no TripSync wordmark)
+
+---
 
 ### 2.2 Itinerary Planner
 
-**Reference:** [`UI/desktop/itinerary_planner/code.html`](UI/desktop/itinerary_planner/code.html) · [`UI/mobile/itinerary_planner_mobile/code.html`](UI/mobile/itinerary_planner_mobile/code.html)
+**Purpose:** Build and review the day-by-day schedule; surface time conflicts; visualize locations on a map.
 
-| Feature | Description |
-|---------|-------------|
-| Split layout | Left: scrollable day timeline; Right: interactive map (desktop) |
-| Day organization | Day header with date subtitle (e.g. Day 1 — Tuesday, June 12 • Arrival) |
-| Activity cards | Time, title, notes, duration; type chips: Flight, Transport, Lodging |
-| Time conflict detection | Visual alerts when activities overlap (e.g. train vs. hotel check-in) |
-| Real-time collaboration | Live editor cursors, "currently editing" pulse indicators on cards and map |
-| Add Activity | Dashed CTA to add new timeline entries |
-| Map pins & routes | Location markers (airport, hotel, conflict points), dashed route lines |
-| Trip stats overlay | Total distance and estimated cost (e.g. 42 km, ¥12,500) |
-| Place search | "Search places..." in top bar |
-| Calendar & filter | Day picker and activity filter controls |
-| Directions | Per-activity navigation action |
-| Map controls | Zoom in/out, recenter to my location |
+#### Page sections & features
+
+| UI Section | Features |
+|------------|----------|
+| **Trip context (sidebar)** | Trip name, collaborator count, live presence avatars with online dots, Invite Explorer — desktop |
+| **Day navigation** | Current day label + date subtitle (e.g. Day 1 — Tuesday, June 12 • Arrival); switch between days |
+| **Activity timeline** | Vertical timeline with time column; activity cards with type chips (Flight, Transport, Lodging / Accommodation); title, notes, duration |
+| **Activity actions** | Per-item overflow menu (desktop); Directions + Details buttons; Navigate from embedded map |
+| **Time conflict alerts** | Error styling on conflicting items; "Time Conflict" / "Conflict" badge; overlap explanation (e.g. overlaps with Hotel Check-in); suggested remediation |
+| **Real-time collaboration** | Named editor cursors on timeline items; "currently editing" pulse on active card; collaborator avatar on card; "X is tracking this" — mobile |
+| **Add activity** | Dashed "Add Activity" button at timeline bottom — desktop |
+| **Interactive map** | Location pins (airport, hotel, conflict point); dashed route line; pin labels on hover; zoom +/- and recenter; trip stats overlay (Total Distance, Est. Cost) — desktop |
+| **Place search** | "Search places..." in top bar — desktop |
+| **Day tools** | Calendar picker and filter buttons in timeline header — desktop |
+
+#### Desktop-specific ([`itinerary_planner`](UI/desktop/itinerary_planner/code.html))
+
+- **Split layout:** scrollable timeline (left ~1/3) + full interactive map (right)
+- Map shows collaborator cursor on active pin; conflict pin uses error color + pulse
+- Activity card states: default, conflict (error-container), active (primary left border + elevated shadow)
+- Top bar: TripSync logo, Explore / Community links (**Phase 2**), search, notification dot, profile
+
+#### Mobile-specific ([`itinerary_planner_mobile`](UI/mobile/itinerary_planner_mobile/code.html))
+
+- **No side-by-side map** — full-width vertical timeline; **Map View** button opens map (implied full-screen)
+- **Horizontal day selector:** snap-scroll chips (Day 1 / Oct 12 active, Day 2, Day 3…)
+- Day theme title (e.g. "Tokyo Arrival") below selector
+- Conflict card includes contextual warning text + **View Alternatives** CTA
+- Lodging card embeds **mini map snippet** with **Navigate** button
+- Simpler top bar: avatar, centered trip name, notifications only
+
+---
 
 ### 2.3 Group Hub
 
-**Reference:** [`UI/desktop/group_hub/code.html`](UI/desktop/group_hub/code.html) · [`UI/mobile/group_hub_mobile/code.html`](UI/mobile/group_hub_mobile/code.html)
+**Purpose:** Squad communication and shared planning canvas — chat, polls, and mood-board pins in one place.
 
-| Feature | Description |
-|---------|-------------|
-| Squad Chat | Message thread with timestamps, avatars, send input |
-| Online count | "3 online now" with pulse indicator |
-| Collaboration Canvas | Bento-grid board for shared planning artifacts |
-| Polls | Multi-option votes with percentages and voter avatars (e.g. "Day Trip to Hakone?") |
-| Mood board pins | Image pins (e.g. restaurant alley photo), link pins (guides), sticky-note pins (lists) |
-| Pin metadata | Category tags (Food & Drink), favorites, contributor attribution |
-| Live viewing presence | "Mike is viewing" on canvas items |
-| Add Pin / Filter | Create new pins; filter canvas content |
-| Chat ↔ canvas linkage | System messages when polls are created from chat context |
+#### Page sections & features
 
-### 2.4 Budget & Expenses
+| UI Section | Features |
+|------------|----------|
+| **Squad Chat** | Message thread with avatars, sender name, timestamp; sent vs received bubble styles; date divider ("Today") |
+| **Chat header** | "Squad Chat" title; online count (e.g. "3 online now"); message search — desktop |
+| **Chat input** | Text input with placeholder; attachment button (add_circle); send button |
+| **System events** | Inline notices when user creates a poll (e.g. "You created a new poll") — desktop |
+| **Collaboration Canvas** | Shared board for pins and polls; Filter + Add Pin actions — desktop |
+| **Polls** | Multi-option vote with progress bars, percentages, voter avatars; close deadline; vote progress (e.g. 3/4 Voted); polls can appear on canvas or embedded in chat — mobile |
+| **Canvas pins — Image** | Photo card with category tag, title, favorite button, live "X is viewing" indicator |
+| **Canvas pins — Link** | Resource card with icon, title, description preview, contributor attribution, overflow menu |
+| **Canvas pins — Note** | Sticky-note style list (e.g. Souvenir List with bullet items) |
+| **Add content** | Add Pin (desktop canvas); Add Item dashed card (mobile canvas strip) |
 
-**Reference:** [`UI/desktop/budget_tracker/code.html`](UI/desktop/budget_tracker/code.html) · [`UI/mobile/budget_tracker_mobile/code.html`](UI/mobile/budget_tracker_mobile/code.html)
+#### Desktop-specific ([`group_hub`](UI/desktop/group_hub/code.html))
 
-| Feature | Description |
-|---------|-------------|
-| Shared expense ledger | Table: Activity, Payer, Amount, Split method |
-| Add Expense | Primary CTA to log new spending |
-| Live sync notification | Toast when a collaborator adds an expense (e.g. "Sarah added Dinner at Sushi Dai • $145.00") |
-| Split types | e.g. "Equally (4)" among trip members |
-| Balances | Who owes whom summary (e.g. Mike owes Sarah $36.25) |
-| Settle Up | Action to mark debts as settled |
-| Spending by category | Donut chart: Lodging, Transport, Food with percentages |
-| Total trip cost | Header summary (e.g. $3,450.00) |
+- **Split layout:** chat pane (~1/3 width, left) + Collaboration Canvas (right, bento grid)
+- Canvas header: title, subtitle ("Drop ideas, vote on activities, and plan together"), Filter + Add Pin
+- Poll spans 2 columns as priority item; photo / link / note pins in grid
+- Sidebar: live presence rings on collaborator avatars, Invite Explorer
+
+#### Mobile-specific ([`group_hub_mobile`](UI/mobile/group_hub_mobile/code.html))
+
+- **Vertical split:** Squad Chat (~top 2/3) + Collaboration Canvas (~bottom 1/3) separated by **draggable grabber**
+- Chat shows compact collaborator avatars (+2 overflow) in section header
+- **Poll rendered inside chat** as an interactive card ("Day Trip to Hakone") with tappable options and vote count
+- Chat uses **textarea** input (multi-line) instead of single-line input
+- Canvas: **horizontal scroll** of pin cards; **View All** link to full canvas; pins include link card (with live pulse) and note card (with pinner avatar)
+- No Filter button on mobile canvas
+
+---
+
+### 2.4 Budget Tracker
+
+**Purpose:** Track shared trip spending, split costs, and settle balances between members.
+
+#### Page sections & features
+
+| UI Section | Features |
+|------------|----------|
+| **Cost overview** | Total trip cost headline (e.g. $3,450.00) |
+| **Add expense** | Primary CTA to log new spending — desktop |
+| **Live activity** | Toast when collaborator adds expense (avatar, name, item, amount, dismiss); "Live sync active" indicator — desktop |
+| **Expense ledger** | List/table of expenses: activity name, category icon, payer, amount, split method |
+| **Split display** | Split type badge (e.g. "Equally (4)", "Split Equally") |
+| **Row actions** | Overflow menu on expense rows — desktop |
+| **Balances** | Per-member balance: who owes whom or "gets back"; positive/negative amount styling |
+| **Settlement** | **Settle Up** action; pending settlement summary — mobile |
+| **Category breakdown** | Donut chart with Lodging / Transport / Food percentages and legend — desktop |
+| **Recent expenses** | Card list of latest items with payer and split info — mobile |
+
+#### Desktop-specific ([`budget_tracker`](UI/desktop/budget_tracker/code.html))
+
+- **Shared Expenses** data table with sticky header columns: Activity, Payer, Amount, Split
+- Live notification banner above table (e.g. "Sarah added Dinner at Sushi Dai • $145.00")
+- Right sidebar widgets: **Balances** card + **Spending by Category** donut ($3.4k center total)
+- Trip thumbnail in sidebar; Invite Explorer in nav
+- Top bar: Explore / Community (**Phase 2**)
+
+#### Mobile-specific ([`budget_tracker_mobile`](UI/mobile/budget_tracker_mobile/code.html))
+
+- Centered **Total Trip Cost** display (large typography)
+- **Pending Settlement** card with net amount owed (e.g. -$120.50) + prominent Settle Up button
+- **Balances** as a vertical list; current user marked "(You)" with ring highlight
+- **Recent Expenses** as stacked cards (not table) with category icon, amount, payer, split badge; **View All** link
+- No donut chart, no live sync toast, no Add Expense button in prototype (may use FAB or nav action in implementation)
+- Category examples in cards: restaurant, train (Shinkansen Tickets)
+
+---
 
 ### 2.5 Global / Cross-Module
 
-| Feature | Description |
-|---------|-------------|
-| Desktop side navigation | Dashboard, Itinerary, Budget, Group Hub — fixed left sidebar |
-| Mobile bottom tab bar | Same four modules via bottom nav (`md:hidden` in mobile prototypes) |
-| Top app bar | Notifications, user profile avatar |
-| Invite Explorer | Available from sidebar on every module |
-| Settings & Support | Footer links in sidebar |
-| Explore / Community | Present in top nav prototypes — **Phase 2** (not in MVP scope) |
-| Dark mode | Supported in prototype styles (`dark:` Tailwind classes) |
+Features present across multiple page prototypes:
+
+| Feature | Where it appears | Notes |
+|---------|------------------|-------|
+| Trip workspace context | All pages | Active trip name (e.g. Summer in Tokyo), 4 collaborators |
+| Module navigation | All pages | Dashboard · Itinerary · Budget · Group Hub |
+| Notifications | All top bars | Bell icon; unread dot on some desktop pages |
+| User profile | Desktop top bar / mobile leading avatar | Circular photo avatar |
+| Invite Explorer | Desktop sidebar | Group Hub, Itinerary, Budget, Dashboard |
+| Settings & Support | Desktop sidebar footer | Not shown on mobile prototypes |
+| Explore / Community | Desktop top nav | Itinerary, Group Hub, Budget — **Phase 2** |
+| Dark mode | All prototypes | `dark:` Tailwind classes throughout |
+| Real-time presence | Dashboard, Itinerary, Group Hub, Budget | Online dots, live sync, editor cursors, viewing indicators |
+
+#### Desktop vs mobile summary
+
+| Capability | Desktop | Mobile |
+|------------|---------|--------|
+| Navigation | Left sidebar + top app bar | Bottom tab bar + compact top bar |
+| Itinerary map | Inline split-pane map | Map View button + inline mini-map on cards |
+| Group Hub layout | Chat + canvas side-by-side | Chat + canvas stacked with resize grabber |
+| Budget ledger | Full table + charts | Cards + settlement-first layout |
+| Quick Ideas | Checkbox list with votes/comments | Thumbnail cards with upvote UI |
+| Add expense | Header button | Not in mobile prototype |
 
 ---
 
@@ -396,4 +503,4 @@ TripPlanner/
 
 ---
 
-*Document version: 1.1 — updated for `UI/desktop/` and `UI/mobile/` prototype layout.*
+*Document version: 1.2 — Core Features refined from desktop and mobile UI prototype analysis.*
