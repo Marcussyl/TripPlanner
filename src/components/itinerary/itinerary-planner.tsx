@@ -46,6 +46,7 @@ export function ItineraryPlanner({ tripId, canEdit, tripStartDate }: ItineraryPl
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
   const [addActivityOpen, setAddActivityOpen] = useState(false);
   const [addDayOpen, setAddDayOpen] = useState(false);
+  const [editingActivity, setEditingActivity] = useState<Day['activities'][number] | null>(null);
 
   const loadDays = useCallback(async () => {
     const response = await fetch(`/api/trips/${tripId}/days`);
@@ -120,6 +121,30 @@ export function ItineraryPlanner({ tripId, canEdit, tripStartDate }: ItineraryPl
   const handleDelete = async (activityId: string) => {
     await fetch(`/api/trips/${tripId}/activities/${activityId}`, { method: 'DELETE' });
     await loadDays();
+  };
+
+  const handleUpdateActivity = async (data: Parameters<
+    React.ComponentProps<typeof AddActivityDialog>['onSubmit']
+  >[0]) => {
+    if (!editingActivity) {
+      return;
+    }
+
+    await fetch(`/api/trips/${tripId}/activities/${editingActivity.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: data.type,
+        title: data.title,
+        startTime: data.startTime ?? null,
+        duration: data.duration ?? null,
+        lat: data.lat ?? null,
+        lng: data.lng ?? null,
+        notes: data.notes ?? null,
+      }),
+    });
+    await loadDays();
+    setEditingActivity(null);
   };
 
   if (loading) {
@@ -201,6 +226,7 @@ export function ItineraryPlanner({ tripId, canEdit, tripStartDate }: ItineraryPl
                       conflictPartnerTitle={conflictPartners.get(activity.id)}
                       isHighlighted={activity.type === 'lodging' && !conflicts.has(activity.id)}
                       canEdit={canEdit}
+                      onEdit={() => setEditingActivity(activity)}
                       onDelete={() => void handleDelete(activity.id)}
                     />
                   ))
@@ -254,6 +280,20 @@ export function ItineraryPlanner({ tripId, canEdit, tripStartDate }: ItineraryPl
           onOpenChange={setAddActivityOpen}
           dayId={selectedDay.id}
           onSubmit={handleAddActivity}
+        />
+      )}
+
+      {selectedDay && editingActivity && (
+        <AddActivityDialog
+          open={Boolean(editingActivity)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setEditingActivity(null);
+            }
+          }}
+          dayId={selectedDay.id}
+          activity={editingActivity}
+          onSubmit={handleUpdateActivity}
         />
       )}
     </div>

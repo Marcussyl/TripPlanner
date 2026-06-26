@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const TYPE_ICONS: Record<string, string> = {
@@ -31,6 +32,7 @@ type TimelineActivityCardProps = {
   conflictPartnerTitle?: string | null;
   isHighlighted?: boolean;
   canEdit?: boolean;
+  onEdit?: () => void;
   onDelete?: () => void;
 };
 
@@ -50,10 +52,28 @@ export function TimelineActivityCard({
   conflictPartnerTitle,
   isHighlighted,
   canEdit,
+  onEdit,
   onDelete,
 }: TimelineActivityCardProps) {
   const { time, period } = formatTimeParts(activity.startTime);
   const badgeStyle = TYPE_BADGE_STYLES[activity.type] ?? TYPE_BADGE_STYLES.activity;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [menuOpen]);
 
   return (
     <div className="itinerary-timeline-item relative mb-4">
@@ -105,14 +125,50 @@ export function TimelineActivityCard({
               {activity.type}
             </span>
             {canEdit && (
-              <button
-                type="button"
-                className="text-tertiary opacity-0 transition-opacity group-hover:opacity-100 hover:text-on-surface"
-                onClick={onDelete}
-                aria-label="Delete activity"
-              >
-                <span className="material-symbols-outlined text-[18px]">more_horiz</span>
-              </button>
+              <div className="relative" ref={menuRef}>
+                <button
+                  type="button"
+                  className="rounded-full p-1 text-tertiary transition-colors hover:bg-surface-variant hover:text-on-surface"
+                  onClick={() => setMenuOpen((current) => !current)}
+                  aria-label="Activity actions"
+                  aria-expanded={menuOpen}
+                  aria-haspopup="menu"
+                >
+                  <span className="material-symbols-outlined text-[18px]">more_horiz</span>
+                </button>
+
+                {menuOpen && (
+                  <div
+                    role="menu"
+                    className="absolute top-full right-0 z-30 mt-1 min-w-[140px] overflow-hidden rounded-lg border border-outline-variant bg-surface-container-lowest py-1 shadow-level-3"
+                  >
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-body-sm text-on-surface hover:bg-surface-container"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        onEdit?.();
+                      }}
+                    >
+                      <span className="material-symbols-outlined text-[16px]">edit</span>
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-body-sm text-error hover:bg-error-container/30"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        onDelete?.();
+                      }}
+                    >
+                      <span className="material-symbols-outlined text-[16px]">delete</span>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
