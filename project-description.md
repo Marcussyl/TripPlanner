@@ -1,5 +1,7 @@
 # TripSync — Project Description
 
+> **Implementation:** See [`implementation-plan.md`](implementation-plan.md) for phased tasks, dependencies, acceptance criteria, and infrastructure decisions.
+
 ## 1. Overview
 
 **TripSync** is a collaborative trip planning platform for group travelers. It brings itinerary planning, group discussion, idea voting, and expense splitting into a single **Trip Workspace**, so friends and families can plan together without juggling group chats, spreadsheets, and map apps.
