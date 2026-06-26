@@ -16,15 +16,30 @@ export async function GET(request: Request, context: RouteContext) {
 
     const { searchParams } = new URL(request.url);
     const upcoming = searchParams.get('upcoming') === 'true';
-    const limit = Number(searchParams.get('limit') ?? '10');
+    const limitParam = searchParams.get('limit');
+    const limit = limitParam ? Number(limitParam) : undefined;
+    const now = new Date();
+    const todayStart = new Date(now);
+    todayStart.setHours(0, 0, 0, 0);
 
     const activities = await prisma.activity.findMany({
       where: {
         day: { tripId: id },
-        ...(upcoming ? { startTime: { gte: new Date() } } : {}),
+        ...(upcoming
+          ? {
+              OR: [
+                { startTime: null },
+                { startTime: { gte: now } },
+                { day: { date: { gte: todayStart } } },
+              ],
+            }
+          : {}),
       },
-      orderBy: { startTime: 'asc' },
-      take: upcoming ? Math.min(limit, 50) : undefined,
+      orderBy: [
+        { day: { date: 'asc' } },
+        { startTime: { sort: 'asc', nulls: 'last' } },
+      ],
+      take: limit ? Math.min(limit, 50) : undefined,
       include: {
         day: {
           select: { id: true, dayNumber: true, date: true, label: true },

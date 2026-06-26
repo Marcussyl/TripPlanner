@@ -47,12 +47,13 @@ export function TripHeroCard({ trip, tripId, activities }: TripHeroCardProps) {
           src={coverSrc}
           alt={trip.name}
           fill
-          className="object-cover"
+          className="z-0 object-cover"
           sizes="(max-width: 1024px) 100vw, 66vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-on-background/80 via-on-background/20 to-transparent" />
-        <div className="absolute bottom-6 left-6 z-20 text-surface-container-lowest">
+        <div className="pointer-events-none absolute inset-0 z-[1] hero-image-scrim" />
+        <div className="pointer-events-none absolute inset-0 z-[1] hero-image-scrim-gradient" />
+        <div className="absolute bottom-6 left-6 z-[2] text-surface-container-lowest">
           <div className="mb-3 flex flex-wrap gap-2">
             <span className="rounded-full border border-white/20 bg-white/20 px-3 py-1 text-label-sm backdrop-blur-md">
               {trip.destination}

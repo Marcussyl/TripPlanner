@@ -3,6 +3,7 @@
 @theme inline {
   --color-background: #fcf9f8;
   --color-foreground: #1c1b1b;
+  --color-on-background: #1c1b1b;
   --color-surface: #fcf9f8;
   --color-surface-dim: #dcd9d9;
   --color-surface-bright: #fcf9f8;
@@ -172,6 +173,19 @@
 
   .shadow-level-3 {
     box-shadow: 0 8px 24px rgb(28 27 27 / 12%);
+  }
+
+  .hero-image-scrim {
+    background-color: rgb(0 0 0 / 0.22);
+  }
+
+  .hero-image-scrim-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgb(0 0 0 / 0.52) 0%,
+      rgb(0 0 0 / 0.3) 45%,
+      rgb(0 0 0 / 0.08) 100%
+    );
   }
 
   .map-grid-bg {

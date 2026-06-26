@@ -49,7 +49,7 @@ export function DashboardClient({ tripId, initialTrip }: DashboardClientProps) {
 
   const load = useCallback(async () => {
     const [activitiesRes, pinsRes, summaryRes] = await Promise.all([
-      fetch(`/api/trips/${tripId}/activities?upcoming=true&limit=5`),
+      fetch(`/api/trips/${tripId}/activities?limit=5`),
       fetch(`/api/trips/${tripId}/pins?category=idea`),
       fetch(`/api/trips/${tripId}/budget/summary`),
     ]);
@@ -67,6 +67,17 @@ export function DashboardClient({ tripId, initialTrip }: DashboardClientProps) {
 
   useEffect(() => {
     void load();
+  }, [load]);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        void load();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
   }, [load]);
 
   useTripPrivateChannel(tripId, {
