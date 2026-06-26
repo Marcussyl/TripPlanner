@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget &amp; Expense Tracker - TripSync</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#ffb59c",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#d5e3fd",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#390c00",
+                      "surface-bright": "#fcf9f8",
+                      "primary-fixed": "#ffdbcf",
+                      "outline": "#8f7066",
+                      "on-tertiary-container": "#292d2f",
+                      "surface-container-high": "#ebe7e7",
+                      "surface-tint": "#ab3600",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#b9c7e0",
+                      "secondary": "#515f74",
+                      "outline-variant": "#e3bfb3",
+                      "inverse-surface": "#313030",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-secondary-fixed-variant": "#3a485c",
+                      "on-secondary-fixed": "#0d1c2f",
+                      "primary-fixed-dim": "#ffb59c",
+                      "on-background": "#1c1b1b",
+                      "surface-container": "#f0edec",
+                      "primary-container": "#ff5f1f",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#5c5f61",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "on-error-container": "#93000a",
+                      "surface": "#fcf9f8",
+                      "primary": "#ab3600",
+                      "inverse-on-surface": "#f3f0ef",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#d5e3fd",
+                      "tertiary-container": "#919496",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1c1b1b",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-primary-container": "#561700",
+                      "on-primary-fixed-variant": "#832700",
+                      "on-secondary-container": "#57657b",
+                      "background": "#fcf9f8",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-container-low": "#f6f3f2",
+                      "on-surface-variant": "#5b4138",
+                      "surface-dim": "#dcd9d9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "40px",
+                      "margin-mobile": "16px",
+                      "xl": "64px",
+                      "base": "4px",
+                      "gutter": "24px",
+                      "xs": "8px",
+                      "md": "24px",
+                      "margin-desktop": "48px",
+                      "sm": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: theme('colors.outline-variant');
+            border-radius: 20px;
+        }
+        .donut-segment {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        .live-indicator {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            80%, 100% { transform: scale(2.5); opacity: 0; }
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md font-headline-md text-headline-md border-b border-outline-variant dark:border-outline fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed cursor-pointer active:opacity-80">TripSync</span>
+<nav class="hidden md:flex gap-sm">
+<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary-container dark:hover:text-primary-fixed transition-colors" href="#">Explore</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-fixed-variant hover:text-primary-container dark:hover:text-primary-fixed transition-colors" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:text-primary-container transition-colors rounded-full hover:bg-surface-variant cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container p-0.5 cursor-pointer active:opacity-80">
+<img alt="User profile" class="w-full h-full rounded-full object-cover" data-alt="Close up profile picture of a young smiling traveler with a backpack in front of a slightly blurred bright outdoor background. Modern, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAebtVUiEBYztFz_HupOzp2AyyQGJldYaX6Vd9V-kYd-NfJSvT1NdsDA3UKl8_eTgm8I_iX3L-zT_v59FH68S1iOZ5Zv94K6iAmHUlKNsiE4gmEwhmZjYmklXW8oLNe26RbV-NfoNtZMrQXfu_JWlRkf7JioQkIp4L0MqzeKgtB7Pv68X_XvgYXlaQa-oeokguaJSj5S8fdvZUuGsEETy7dcw8ctutWJZyrbp_5tGBm4AyJjtCeiiYz"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-high border-r border-outline-variant dark:border-outline shadow-sm hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] p-sm w-64 z-40">
+<div class="mb-md flex items-center gap-xs px-sm">
+<div class="w-12 h-12 rounded-lg overflow-hidden shrink-0">
+<img alt="Trip icon" class="w-full h-full object-cover" data-alt="A stylized minimalist icon of a Tokyo temple roof or Torii gate in high-contrast orange and deep slate, against a clean off-white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8jRD1EFPLPnxSflWJlDTtqi6w5PG5tGCC71PTyPqlJPwV-7AO5eGwmWKe4AVX-GGw-BWqE5qf1_XdRa2NHXQo-nwpGksFswjSCdbH2gN7fmT4C6oa8s6f3ikMKCzxM7EOxgo7XzZmc6qixVPX7B9dtgcuHkzzwpYR-AbMlVE1MNJUi9Fz__Lllkb-4YNalnb967OWz0A5O10Dn4W2vwbIMxPHsTv9F7TcXZM2DsMAWBcNMXojjExf"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary truncate">Summer in Tokyo</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">4 Collaborators</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs font-label-md text-label-md">
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-on-tertiary-fixed-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-tertiary-container/20 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-on-tertiary-fixed-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-tertiary-container/20 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">map</span>
+                Itinerary
+            </a>
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-lg px-sm py-xs font-bold transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+                Budget
+            </a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-on-tertiary-fixed-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-tertiary-container/20 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">group</span>
+                Group Hub
+            </a>
+<button class="mt-md bg-primary-container text-on-primary px-sm py-xs rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                Invite Explorer
+            </button>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-sm flex flex-col gap-xs font-label-md text-label-md">
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-on-tertiary-fixed-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-tertiary-container/20 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-sm text-on-surface-variant dark:text-on-tertiary-fixed-variant px-sm py-xs hover:bg-surface-variant dark:hover:bg-tertiary-container/20 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 pb-md px-margin-mobile md:pl-[calc(256px+48px)] md:pr-margin-desktop min-h-screen">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-background mb-xs">Budget &amp; Expenses</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant flex items-center gap-2">
+                    Total Trip Cost: <span class="font-headline-md text-headline-md text-primary">$3,450.00</span>
+</p>
+</div>
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-md py-xs rounded-lg hover:bg-surface-tint transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Add Expense
+            </button>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Ledger Section -->
+<div class="xl:col-span-8 flex flex-col gap-gutter">
+<!-- Live Notification -->
+<div class="bg-surface-container-highest border border-outline-variant rounded-xl p-sm flex items-center gap-md shadow-[0px_8px_24px_rgba(28,27,27,0.12)] transform translate-y-0 transition-transform">
+<div class="relative w-10 h-10 shrink-0">
+<img alt="Sarah" class="w-full h-full rounded-full border-2 border-primary-container object-cover" data-alt="Small round profile picture of a woman with short hair, smiling. Vibrant colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANz4Dyth5uKNatD1SYGgAviqO0tXjCk69Kir12XoB2U4tcPcrmM6HVORNtQrpcF2KVmlMq7NBwSz88f6yUEu2oeuxRvexVyA2Yk16jK_7MGdWESNDfM0bGYpwThBuVqjb1x0t7Dno3QEqX_GbwOvuaMJM9OI5nttjQIWO3gsgUiHwEh87h3eDiuiRhaYyTwY1kkxTEKJDUojVUBR_5S-Tli0o4bNl9WtHFdeK4nLWXXxkGrvISDE90"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary-container rounded-full border-2 border-surface-container-highest"></div>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary-container rounded-full live-indicator"></div>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-background"><span class="font-bold">Sarah</span> added a new expense</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Dinner at Sushi Dai • $145.00</p>
+</div>
+<button class="text-secondary hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Ledger Table -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-[0px_4px_20px_rgba(28,27,27,0.05)] border border-outline-variant/50 overflow-hidden flex flex-col h-[600px]">
+<div class="p-md border-b border-outline-variant/50 flex justify-between items-center bg-surface-bright">
+<h2 class="font-headline-md text-headline-md text-on-background">Shared Expenses</h2>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Live sync active</span>
+</div>
+</div>
+<div class="overflow-x-auto flex-1 custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[600px]">
+<thead class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant sticky top-0 z-10">
+<tr>
+<th class="py-sm px-md font-medium border-b border-outline-variant/50">Activity</th>
+<th class="py-sm px-md font-medium border-b border-outline-variant/50">Payer</th>
+<th class="py-sm px-md font-medium border-b border-outline-variant/50 text-right">Amount</th>
+<th class="py-sm px-md font-medium border-b border-outline-variant/50">Split</th>
+<th class="py-sm px-md font-medium border-b border-outline-variant/50 w-10"></th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-sm px-md">
+<div class="flex items-center gap-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+</div>
+                                            Dinner at Sushi Dai
+                                        </div>
+</td>
+<td class="py-sm px-md">
+<div class="flex items-center gap-xs">
+<img alt="Sarah" class="w-6 h-6 rounded-full" data-alt="Small round profile picture of a woman with short hair." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEKu9KLQf80R4ayY0VHXP1TLHyCLkNJ9E0EDLz8eZ-5Tfm97riHaPNsxX4cS-Yd3K8zX0r427PdJkztgmNJgO8nkvnQ4F86apPOSjuOp3p9FN6C5wA5-nII5H83e5JaHI9TgEtWtZtDTe1V1GWC_rQ6j4agtpG_mFBNloEXsflRBGGdbCplOtbUdaqtO0X5WgeYmfsWW8KzNRBbwC7xoGq4I-A85AdWmrA_5D6xH41A5eTW0_4OxZn"/>
+                                            Sarah
+                                        </div>
+</td>
+<td class="py-sm px-md text-right font-medium text-on-background">$145.00</td>
+<td class="py-sm px-md">
+<span class="bg-surface-container-highest px-2 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Equally (4)</span>
+</td>
+<td class="py-sm px-md text-right">
+<button class="text-secondary opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary-container">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- More rows... -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Widgets -->
+<div class="xl:col-span-4 flex flex-col gap-gutter">
+<!-- Who owes whom -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-[0px_4px_20px_rgba(28,27,27,0.05)] border border-outline-variant/50 p-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<h2 class="font-headline-md text-headline-md text-on-background mb-sm">Balances</h2>
+<div class="flex flex-col gap-sm">
+<div class="flex items-center justify-between p-sm bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-sm">
+<img alt="Mike" class="w-10 h-10 rounded-full" data-alt="Small round profile picture of a young man with a beard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwj3IcxRMLTyjkEgFw4n1gKRvp9py_GDlB6UFtyD5Os9B-4PlY8KfVT0QHiK0O7mrqFlhx8pHDmPLWuHxqomqgQ5oorA8S1t-cwdVZy-nZuuTPORn4Ssw6xaQZy_khzvFIVtfk2BML_sPfSmGWY-KBYpV-HwXZUGuu9mjXYUn6DJ6oATT5Yt7J4qtueQvQcgLCLsZVHaP4o18khXDfh8waEaZz4bUeKeJn2izvRQPJ2JEY7am011T_"/>
+<div>
+<p class="font-label-md text-label-md text-on-background">Mike</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px]">owes Sarah</p>
+</div>
+</div>
+<span class="font-label-md text-label-md text-error font-bold">$36.25</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-sm">
+<img alt="Alex" class="w-10 h-10 rounded-full" data-alt="Small round profile picture of a woman with long hair." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyY98u5oS3oBS7dyhmp3m5-bcTufWjkzLr9u0hnTZalcugqwew7E4h6Waq04wDP70aNFhNxeHp0t13zEZvE3zYmtAYECsQWwnQmvWU75CKueQkyjMh8_29knRX_6HibdM0uUolvSg36RGM_8AGIfiqXdl80jyJfQPkDXoPAggihPRVpLNoUgk3NegPRLdXz2MceqbqEdjRhFER795zaZcYMqKjNKblOBAPOZsEnndhhQOnbsaeBuW0"/>
+<div>
+<p class="font-label-md text-label-md text-on-background">Alex</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px]">gets back</p>
+</div>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">+$120.00</span>
+</div>
+</div>
+<button class="w-full mt-md border-2 border-secondary text-on-background font-label-md text-label-md py-xs rounded-lg hover:bg-surface-container-low transition-colors">Settle Up</button>
+</div>
+<!-- Donut Chart Widget -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-[0px_4px_20px_rgba(28,27,27,0.05)] border border-outline-variant/50 p-md flex flex-col items-center">
+<h2 class="font-headline-md text-headline-md text-on-background mb-md w-full text-left">Spending by Category</h2>
+<div class="relative w-48 h-48 mb-md">
+<!-- SVG Donut Chart Placeholder -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background ring -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.surface-container-high')" stroke-width="15"></circle>
+<!-- Segments (Simulated) -->
+<!-- Lodging 45% -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.primary-container')" stroke-dasharray="251.2" stroke-dashoffset="138.16" stroke-width="15"></circle>
+<!-- Transport 30% -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.outline')" stroke-dasharray="251.2" stroke-dashoffset="213.52" stroke-dashoffset-start="138.16" stroke-width="15" transform="rotate(162 50 50)"></circle>
+<!-- Food 25% -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="theme('colors.secondary')" stroke-dasharray="251.2" stroke-dashoffset="188.4" stroke-width="15" transform="rotate(270 50 50)"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-md text-headline-md text-on-background font-bold">$3.4k</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total</span>
+</div>
+</div>
+<div class="w-full flex flex-col gap-xs font-label-sm text-label-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="text-on-background">Lodging</span>
+</div>
+<span class="text-on-surface-variant">45%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-outline"></span>
+<span class="text-on-background">Transport</span>
+</div>
+<span class="text-on-surface-variant">30%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-on-background">Food</span>
+</div>
+<span class="text-on-surface-variant">25%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Summer in Tokyo - Budget</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-dim": "#dcd9d9",
+                        "surface": "#fcf9f8",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#fcf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#390c00",
+                        "on-secondary-container": "#57657b",
+                        "on-surface-variant": "#5b4138",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "inverse-primary": "#ffb59c",
+                        "on-surface": "#1c1b1b",
+                        "surface-tint": "#ab3600",
+                        "secondary-fixed": "#d5e3fd",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "tertiary": "#5c5f61",
+                        "surface-container": "#f0edec",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "inverse-surface": "#313030",
+                        "primary-fixed": "#ffdbcf",
+                        "primary-container": "#ff5f1f",
+                        "secondary-container": "#d5e3fd",
+                        "secondary": "#515f74",
+                        "on-tertiary-container": "#292d2f",
+                        "surface-variant": "#e5e2e1",
+                        "surface-container-high": "#ebe7e7",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1c1b1b",
+                        "outline-variant": "#e3bfb3",
+                        "primary-fixed-dim": "#ffb59c",
+                        "on-error-container": "#93000a",
+                        "outline": "#8f7066",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-container": "#919496",
+                        "primary": "#ab3600",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "on-primary-container": "#561700",
+                        "surface-container-low": "#f6f3f2",
+                        "on-primary-fixed-variant": "#832700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xl": "64px",
+                        "lg": "40px",
+                        "xs": "8px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcf9f8; }
+        
+        /* Level 2 Shadow */
+        .shadow-level-2 {
+            box-shadow: 0px 4px 20px 0px rgba(28, 27, 27, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-[80px]">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-md fixed top-0 w-full border-b border-surface-variant dark:border-on-surface-variant z-50 h-16 flex justify-between items-center px-margin-mobile">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of an energetic young adult traveler with messy hair and sunglasses, looking excitedly at the camera. The background is a bright blur of a modern cityscape. The lighting is sunny and optimistic, fitting a travel adventure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_7h5LZKc4xiqyXOuoXm7Ih3aZ96H_VKaVxMJYhbDfe0M8JomeZsVwF8OAG2RnoYT1O8by6x-oKq0eQ-si2uqNhEEtVQDaLJT1dYwX6Mfsb6Gk-Kw27JxX7wOiBJlaGwVS8cQ5uEjxbobpLkfd7epLTcux_ixdh6T7U9ydrkkcr6lpKcWEMztmgFQpuhkirnwIDYApqC8V_MEXy_UH-fmN1SscrrlBCwNaoKE1rPKFwwAQlTrblpks"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-on-surface dark:text-inverse-on-surface">Summer in Japan</h1>
+</div>
+<button class="p-2 text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[80px] px-margin-mobile flex flex-col gap-lg max-w-md mx-auto">
+<!-- Total Trip Cost Overview -->
+<section class="flex flex-col items-center justify-center py-md">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-xs">Total Trip Cost</h2>
+<div class="font-display-lg text-display-lg text-on-surface font-extrabold tracking-tight">
+                $3,450.00
+            </div>
+</section>
+<!-- Settlement Action Card -->
+<section class="bg-surface-container-lowest rounded-[24px] shadow-level-2 p-md border border-surface-variant flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Pending Settlement</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-error font-bold mt-1">-$120.50</span>
+</div>
+<button class="bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+                Settle Up
+            </button>
+</section>
+<!-- Group Balances -->
+<section class="flex flex-col gap-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">Balances</h3>
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-2 border border-surface-variant overflow-hidden">
+<ul class="divide-y divide-surface-variant">
+<li class="p-sm flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold border-2 border-surface-container-lowest ring-2 ring-primary-container">
+                                J
+                            </div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Jessie (You)</span>
+</div>
+<span class="font-body-md text-body-md text-error font-semibold">-$120.50</span>
+</li>
+<li class="p-sm flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-lowest ring-2 ring-secondary" data-alt="A small circular avatar of a young woman with dark hair in a ponytail, smiling brightly. The background is a soft, out-of-focus street scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9TgsIXJMoSINiUHaIGJlUT9g0W8NK_HV1jtCEpDz8v-JiFRXEOK65QkEGIW6O7EbmmRVPoJz_tVAZQlJ06evvp4epgF-Tm9b5FYb5z53JdgFzquzEkE-tWEucC5VLdWqOSPeymlmmBfjGNXDNa4v6Ov1dRma-iCxdZUuffCw5Xi4YesuKmH6LlqlFb4R0Ib5kd88R7VO7ZjCzD2w-dZe3NiakyzpA5y1DpEorZMh3FNHtc54Ltu5L"/>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sarah</span>
+</div>
+<span class="font-body-md text-body-md text-[#2e7d32] font-semibold">+$85.00</span>
+</li>
+<li class="p-sm flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container font-bold border-2 border-surface-container-lowest ring-2 ring-tertiary">
+                                M
+                            </div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Mike</span>
+</div>
+<span class="font-body-md text-body-md text-[#2e7d32] font-semibold">+$35.50</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Recent Expenses -->
+<section class="flex flex-col gap-sm">
+<div class="flex justify-between items-end">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Expenses</h3>
+<button class="font-label-md text-label-md text-primary hover:underline">View All</button>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Expense Item 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-2 border-l-[4px] border-l-primary-container p-sm flex items-start gap-sm">
+<div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center text-on-surface-variant flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div class="flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Dinner at Sushi Dai</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">$145.00</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Paid by Sarah</span>
+<span class="bg-secondary-container/50 text-on-secondary-container font-label-sm text-label-sm px-2 py-1 rounded-full">Split Equally</span>
+</div>
+</div>
+</div>
+<!-- Expense Item 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-level-2 border border-surface-variant p-sm flex items-start gap-sm">
+<div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center text-on-surface-variant flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="train">train</span>
+</div>
+<div class="flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Shinkansen Tickets</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">$320.00</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Paid by You</span>
+<span class="bg-secondary-container/50 text-on-secondary-container font-label-sm text-label-sm px-2 py-1 rounded-full">Split Equally</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (from JSON) - Budget Tab Active -->
+<nav class="bg-surface dark:bg-surface-container-lowest fixed bottom-0 w-full rounded-t-xl shadow-[0px_-4px_20px_0px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center px-4 pb-4 pt-2 md:hidden">
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2 flex-1">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2 flex-1">
+<span class="material-symbols-outlined mb-1" data-icon="map">map</span>
+<span class="font-label-sm text-label-sm">Itinerary</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-90 transition-all duration-200 flex-1">
+<span class="material-symbols-outlined mb-1" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-sm text-label-sm">Budget</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors rounded-lg p-2 flex-1">
+<span class="material-symbols-outlined mb-1" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm">Group</span>
+</button>
+</nav>
+</body></html>

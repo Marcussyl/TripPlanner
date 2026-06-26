@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tokyo Trip Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#f3f0ef",
+                      "surface-dim": "#dcd9d9",
+                      "surface": "#fcf9f8",
+                      "surface-container-highest": "#e5e2e1",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "background": "#fcf9f8",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#390c00",
+                      "on-secondary-container": "#57657b",
+                      "on-surface-variant": "#5b4138",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-secondary-fixed": "#0d1c2f",
+                      "inverse-primary": "#ffb59c",
+                      "on-surface": "#1c1b1b",
+                      "surface-tint": "#ab3600",
+                      "secondary-fixed": "#d5e3fd",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "tertiary": "#5c5f61",
+                      "surface-container": "#f0edec",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "inverse-surface": "#313030",
+                      "primary-fixed": "#ffdbcf",
+                      "primary-container": "#ff5f1f",
+                      "secondary-container": "#d5e3fd",
+                      "secondary": "#515f74",
+                      "on-tertiary-container": "#292d2f",
+                      "surface-variant": "#e5e2e1",
+                      "surface-container-high": "#ebe7e7",
+                      "error-container": "#ffdad6",
+                      "on-background": "#1c1b1b",
+                      "outline-variant": "#e3bfb3",
+                      "primary-fixed-dim": "#ffb59c",
+                      "on-error-container": "#93000a",
+                      "outline": "#8f7066",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#b9c7e0",
+                      "surface-bright": "#fcf9f8",
+                      "tertiary-container": "#919496",
+                      "primary": "#ab3600",
+                      "on-secondary-fixed-variant": "#3a485c",
+                      "on-primary-container": "#561700",
+                      "surface-container-low": "#f6f3f2",
+                      "on-primary-fixed-variant": "#832700"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "xl": "64px",
+                      "lg": "40px",
+                      "xs": "8px",
+                      "margin-desktop": "48px",
+                      "margin-mobile": "16px",
+                      "md": "24px",
+                      "sm": "16px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .level-1-border { border: 1px solid #e5e2e1; } /* Slate-200 equivalent */
+        .level-2-shadow { box-shadow: 0px 4px 20px 0px rgba(28, 27, 27, 0.05); } /* Charcoal 5% */
+        .level-3-shadow { box-shadow: 0px 8px 24px 0px rgba(28, 27, 27, 0.12); } /* Charcoal 12% */
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-md border-b border-surface-variant dark:border-on-surface-variant z-50 flex justify-between items-center px-margin-mobile h-16 w-full z-50">
+<div class="flex items-center gap-xs">
+<!-- Leading Avatar -->
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border-2 border-surface">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image showing a young traveler smiling. Soft, natural lighting. A bright and optimistic mood suitable for a modern travel app. High-contrast, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACO2jG6KJUAhmOycQxI-uuO3SqBRqmhSynj0gsYJMfhIGHY8nFBRiIVOjiH94KKHs9Bl64xSYE7zxtSUQocjCnptu-XLXPXmuEc7DxzNXOgTfMXJpyKlowYCIAp_Tcp0kw-jI1NAwaGbHEPytj42apeaecxoKMVnKjj0FIbOMcpO_I4v-XdDLpmswvxL6-OUtP3tyh-cDzFEwcgETTa1PA_MGWfQugr4J0nyG-1qVdW-V64kt35qlI"/>
+</div>
+<!-- Headline -->
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-on-surface dark:text-inverse-on-surface text-primary dark:text-primary-fixed-dim truncate max-w-[200px]">Summer in Japan</h1>
+</div>
+<!-- Trailing Icon -->
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-margin-mobile flex flex-col gap-sm max-w-[400px] mx-auto md:max-w-[768px] md:px-margin-desktop md:grid md:grid-cols-8 md:gap-gutter lg:max-w-[1200px] lg:grid-cols-12 lg:pt-24">
+<!-- Hero Card: Tokyo Sunset -->
+<section class="col-span-4 md:col-span-8 lg:col-span-12 relative w-full h-[300px] rounded-[24px] overflow-hidden level-2-shadow mb-sm md:mb-md">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="A breathtaking, cinematic image of the Tokyo skyline at sunset. The Tokyo Tower is prominently featured against a vibrant, fiery orange and deep violet sky. Soft, diffused lighting creates a majestic and adventurous mood. Modern explorer aesthetic with high contrast and vivid colors. High definition, wide angle shot." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAk_B_Se20m3LE82QZOYm1mbN0LjfWzRTTq7jkRzKlxruFHuAwhWlsISC0VDKH7OmZmv1ATexIxonKm2t-IeU38Lnr5wTOkdKKFWkFNo1k3vGKIWBa7ESkpTd2SiCC-2JM5y052tAV7wyZWpos7PsanPVyITqSlnxt388sy_27iilgWho2jgs4UYh7yllHVV7BkbUAojHWVulUcisQk6i5By0aJQXfr0iWHtA0rvn9B7zfgl5nErxM_')"></div>
+<!-- Gradient Overlay for Text Readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-on-background/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-sm md:p-md w-full flex flex-col justify-end">
+<div class="flex items-center gap-xs mb-xs">
+<span class="bg-surface/20 backdrop-blur-md border border-surface/30 text-surface px-2 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider">Aug 12 - Aug 24</span>
+<!-- Live Presence Indicator -->
+<div class="flex items-center gap-1 bg-surface/20 backdrop-blur-md border border-surface/30 px-2 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-surface">2 online</span>
+</div>
+</div>
+<h2 class="font-display-lg text-display-lg text-surface drop-shadow-md">Summer in Tokyo</h2>
+</div>
+</section>
+<!-- Left Column (Mobile: Full Width) -->
+<div class="col-span-4 lg:col-span-7 flex flex-col gap-sm md:gap-md">
+<!-- Up Next: Activity -->
+<section class="bg-surface rounded-[24px] p-sm md:p-md level-2-shadow relative overflow-hidden border-l-[4px] border-primary-container">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<h3 class="font-label-md text-label-md text-secondary mb-1">UP NEXT</h3>
+<div class="flex items-center gap-xs text-on-surface">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">flight_land</span>
+<h4 class="font-headline-md text-headline-md-mobile">Arrival at HND</h4>
+</div>
+</div>
+<span class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full">14:30 JST</span>
+</div>
+<div class="flex items-center gap-sm mt-sm">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-variant">
+<img class="w-full h-full object-cover rounded-full" data-alt="Small circular avatar of a young woman with glasses, smiling lightly. Soft studio lighting. Modern, high-contrast, optimistic UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM8XdRZuFyBqZoxW-53qKESrxDmf19qOOe_AWYWfbFTgf_YVCwDVBW0Qgynz20pEUw66Wzlv9vYWj6--PCDswT1MBltJ5GNMUe7qRen82zUcGxM0RAVN8MkD5mzLsqgAPkLxOi_-xPhijEqeVo7GDi6829Y16CMYFsY0beTHYNM6SsV-NkLbgPbcPWZ-VcAwcXRLwOZ-nhCPNo9JxRxE6n-KS1XtqwCcEdGlLUIBDUt5O_0XxJ5hg6"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-variant">
+<img class="w-full h-full object-cover rounded-full" data-alt="Small circular avatar of a young man with dark hair, looking directly at the camera. Clean background. Modern, high-contrast, optimistic UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2q2RwFJCAcXRf3aaiKUA17iNgUDO9aOn9Beh2386HuU6LUt5reGhB1dZ6NaRHuR0SkX4LDY0rUTX_TrONFNTcifWcwdSwtyi_eq_3qa2nvUX1A0WiUbiXV0jfi7varp7J2lfy2yXKnm15CtTcLTwPOnErpF8oJA_bWlT6CxEi31LRhBZrtzPWeNEDch8HpUeMkYaep1AGY6DBG1aCatpyZuxDuiQDuT0q7puQazEWPbMBWvuZj0-j"/>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Meeting at Terminal 3 Arrivals</span>
+</div>
+<!-- Action Buttons -->
+<div class="mt-sm flex gap-xs">
+<button class="bg-primary-container hover:bg-primary transition-colors text-on-primary-container px-4 py-2 rounded-lg font-label-md text-label-md flex-1 text-center">View Details</button>
+<button class="border-2 border-on-surface text-on-surface hover:bg-surface-container transition-colors px-4 py-2 rounded-lg font-label-md text-label-md flex items-center justify-center">
+<span class="material-symbols-outlined">directions</span>
+</button>
+</div>
+</section>
+<!-- Group Budget Summary -->
+<section class="bg-surface rounded-[24px] p-sm md:p-md level-2-shadow">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Group Budget</h3>
+</div>
+<span class="font-label-md text-label-md text-secondary">85%</span>
+</div>
+<div class="flex items-end gap-xs mb-xs">
+<span class="font-headline-lg text-headline-lg-mobile text-on-surface">$4,250</span>
+<span class="font-body-md text-body-md text-secondary pb-1">/ $5,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden mb-sm mt-xs">
+<div class="h-full bg-primary-container rounded-full" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>Remaining: $750</span>
+<span>4 Days Left</span>
+</div>
+</section>
+</div>
+<!-- Right Column (Mobile: Stacked Below) -->
+<div class="col-span-4 lg:col-span-5 flex flex-col gap-sm md:gap-md">
+<!-- Quick Ideas Voting -->
+<section class="bg-surface rounded-[24px] p-sm md:p-md level-2-shadow flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">how_to_vote</span>
+                        Quick Ideas
+                    </h3>
+<span class="font-label-sm text-label-sm bg-secondary-container text-on-secondary-container px-2 py-1 rounded-full">Needs Votes</span>
+</div>
+<div class="flex flex-col gap-xs overflow-y-auto max-h-[300px] pr-2 custom-scrollbar">
+<!-- Voting Item 1 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl p-xs flex items-center justify-between group hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A small, stylized thumbnail image showing the interior of Gonpachi restaurant in Tokyo. Warm, glowing lanterns, rustic wooden architecture. Cozy, energetic dining atmosphere. High contrast, modern explorer aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2pEgGu9S-V50zGLTmxJuvDdZ4zP7urtoJRSfKOgXueJ-hClyfdlpwLhIxgZBd7ctRLNoWzvlpLXQx1evILDJ-Cnz-bVqQirY2M2it6VjNQVMljPZSGeQg5fz7sXrMQW8XfTHNc0iiQ-b4RRMZXeVqiUQNcl-z6shdE6nTfqr9h69PDaZuCv9T7FN0ZuuyhLf2lDv9cCy_ddpjVBzw4q0h3Yv5OlFbrZFmgTJ6yr_QVRkyiXv0Jecp"/>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-1">Team Dinner at Gonpachi</h4>
+<div class="flex gap-1 mt-1">
+<span class="bg-surface-container text-on-surface-variant px-2 py-[2px] rounded-full font-label-sm text-[10px] uppercase">Dining</span>
+<span class="bg-surface-container text-on-surface-variant px-2 py-[2px] rounded-full font-label-sm text-[10px] uppercase">$$$</span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface flex-shrink-0">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-sm leading-none">arrow_upward</span>
+<span class="font-label-sm text-[10px] leading-none">4</span>
+</div>
+</button>
+</div>
+<!-- Voting Item 2 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl p-xs flex items-center justify-between group hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A small, stylized thumbnail image showing the iconic red lantern at Senso-ji temple in Asakusa, Tokyo. Bright daylight, clear sky. Traditional Japanese architecture. Modern explorer aesthetic, crisp and vibrant." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQfgiXgrzmlWeAFL2SFp_KLAZ9-Abj-rouyAo_EH99Wu_1Zo9nBwDpCLGOLhjR7FNvKagGFZmjziMnqMLExc1xDLt1u7Pc5r2QOqBorGGH4huYnNHQ55jDwXijb2Q2ovUfgUVw9Y59Lqcb4t_lvgOiKJzbk4OL0f8sRW0lniM0XfWGiNA3AsSdhdtfSo0a19cLt8lpRuH0X_I8gXyIkNOsJAs2p3yYug-fSIK8q1ppiSOyR9EVaFkD"/>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-1">Visit Senso-ji</h4>
+<div class="flex gap-1 mt-1">
+<span class="bg-surface-container text-on-surface-variant px-2 py-[2px] rounded-full font-label-sm text-[10px] uppercase">Culture</span>
+<span class="bg-surface-container text-on-surface-variant px-2 py-[2px] rounded-full font-label-sm text-[10px] uppercase">Free</span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-container text-on-primary-container transition-colors flex-shrink-0 shadow-sm">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-sm leading-none" style="font-variation-settings: 'FILL' 1;">arrow_upward</span>
+<span class="font-label-sm text-[10px] leading-none">5</span>
+</div>
+</button>
+</div>
+<!-- Voting Item 3 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-xl p-xs flex items-center justify-between group hover:border-outline-variant transition-colors opacity-70">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary">local_cafe</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-1">Coffee at Nakameguro</h4>
+<div class="flex gap-1 mt-1">
+<span class="bg-surface-container text-on-surface-variant px-2 py-[2px] rounded-full font-label-sm text-[10px] uppercase">Chill</span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface flex-shrink-0">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-sm leading-none">arrow_upward</span>
+<span class="font-label-sm text-[10px] leading-none">1</span>
+</div>
+</button>
+</div>
+</div>
+<button class="mt-auto w-full py-2 border-2 border-surface-container-high rounded-lg font-label-md text-label-md text-secondary hover:bg-surface-container-lowest transition-colors flex items-center justify-center gap-xs mt-sm">
+<span class="material-symbols-outlined text-sm">add</span> Add Idea
+                </button>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface dark:bg-surface-container-lowest rounded-t-xl shadow-[0px_-4px_20px_0px_rgba(0,0,0,0.05)] shadow-lg md:hidden">
+<!-- Dashboard (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<!-- Itinerary -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest px-2 py-1 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-sm text-label-sm mt-1">Itinerary</span>
+</a>
+<!-- Budget -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest px-2 py-1 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Budget</span>
+</a>
+<!-- Group -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest px-2 py-1 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm mt-1">Group</span>
+</a>
+</nav>
+<!-- Desktop Sidebar Navigation (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-16 bottom-0 w-64 bg-surface level-1-border pt-md px-sm gap-sm z-40">
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            Dashboard
+        </a>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary hover:bg-surface-container font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined">map</span>
+            Itinerary
+        </a>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary hover:bg-surface-container font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+            Budget
+        </a>
+<a class="flex items-center gap-sm px-4 py-3 rounded-lg text-secondary hover:bg-surface-container font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+            Group
+        </a>
+</aside>
+<style>
+        /* Custom Scrollbar for Ideas section */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #e5e2e1; /* surface-variant equivalent */
+            border-radius: 10px;
+        }
+        
+        /* Adjust layout for desktop sidebar */
+        @media (min-width: 768px) {
+            main {
+                padding-left: calc(16rem + 48px); /* sidebar width + desktop margin */
+            }
+        }
+    </style>
+</body></html>

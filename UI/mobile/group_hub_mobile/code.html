@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Group Hub - Summer in Japan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-dim": "#dcd9d9",
+                        "surface": "#fcf9f8",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#fcf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#390c00",
+                        "on-secondary-container": "#57657b",
+                        "on-surface-variant": "#5b4138",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "inverse-primary": "#ffb59c",
+                        "on-surface": "#1c1b1b",
+                        "surface-tint": "#ab3600",
+                        "secondary-fixed": "#d5e3fd",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "tertiary": "#5c5f61",
+                        "surface-container": "#f0edec",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "inverse-surface": "#313030",
+                        "primary-fixed": "#ffdbcf",
+                        "primary-container": "#ff5f1f",
+                        "secondary-container": "#d5e3fd",
+                        "secondary": "#515f74",
+                        "on-tertiary-container": "#292d2f",
+                        "surface-variant": "#e5e2e1",
+                        "surface-container-high": "#ebe7e7",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1c1b1b",
+                        "outline-variant": "#e3bfb3",
+                        "primary-fixed-dim": "#ffb59c",
+                        "on-error-container": "#93000a",
+                        "outline": "#8f7066",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-container": "#919496",
+                        "primary": "#ab3600",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "on-primary-container": "#561700",
+                        "surface-container-low": "#f6f3f2",
+                        "on-primary-fixed-variant": "#832700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xl": "64px",
+                        "lg": "40px",
+                        "xs": "8px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #fcf9f8; }
+        /* Scrollbar hiding for chat */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased bg-background pb-24 pt-16">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-md fixed top-0 w-full border-b border-surface-variant dark:border-on-surface-variant flex justify-between items-center px-margin-mobile h-16 w-full z-50">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-container relative">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of an energetic young traveler in Tokyo, wearing a casual modern jacket. Bright, optimistic daytime lighting. Modern Explorer aesthetic with crisp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-jhLx4zJFK8ha2OJ37KKaF4QT6NKCBdp21Gp6dvkB6ENQOjYi-7h6FfzSU-4mkt0QeEsct8Eb9ojRpNfYGhM6Wf2O0QfqM62xnrES96sPtk0N3oS6nsZQcUaDh4JiDwl4R2ktFELNkwwqAGB2tBP-zHZpLnEEf8v-gj_8qr4jx8zGUdmpCfHOz8Ic2aFqi3ZYsRFOztLKFCeCJ5uwFSr1h38pbBbKWOJbXuTQ1Lfm0-CavCdPADY3"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-primary-container border-2 border-white rounded-full"></span>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-on-surface dark:text-inverse-on-surface">Summer in Japan</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">notifications</span>
+</button>
+</header>
+<main class="w-full h-[calc(100vh-8rem)] flex flex-col">
+<!-- Squad Chat (Top Half) -->
+<section class="flex-1 flex flex-col p-margin-mobile overflow-hidden">
+<div class="flex justify-between items-center mb-sm">
+<h2 class="font-label-md text-label-md text-on-surface-variant">Squad Chat</h2>
+<div class="flex -space-x-2">
+<img alt="Sarah" class="w-6 h-6 rounded-full border-2 border-surface object-cover" data-alt="A portrait of an adventurous young woman smiling brightly, wearing a casual orange top. Modern Explorer style, bright soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvhCsoMyMYpJq6OZDOeXsoaG5oqqkvCNr5HgsLWGvAkIa06FaFZMDIgqFjxDvvItRXIhY5ih9LCNpOYRqlxkw5zYb0NxYUr6fr5NezTQLK8O-boEyavGTa-wu6vfpCnlD3N3rqq-IVJugbEo1tnrtTcZcSpPED2HUf5p5BVc6Jb3-byGd1uHvyBJEsmWMR6qyM5N3yRdMhrJOYSgu33xcuXvnklBkrO2p_ZRLRzEXIJDtUueP2XVjN"/>
+<img alt="Mike" class="w-6 h-6 rounded-full border-2 border-surface object-cover" data-alt="A portrait of a male traveler with a modern haircut, looking thoughtful. Crisp, clean lighting against a light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3aDO87pcunDAT-uLbAO9tIDABllpp3_U4Dpad3gn-Fr1L7oH5cfv9VGqZ9C2eUfjLDf2QjVQ_5qN6MnQ6tVdAUdybBbLottbEoZZnfiiqah5cKcQs1QS2VdmwuxFQ7-smTQvpmc328fiPbwAYmno-ulXxEgmJal-SOQRYkEWv2k4FWe9sajPHj655oCOP5L_9DczeGtWdq7JM2Fq_1mG66HffEgArsBirJLTxOGcBJrCJf3dBYh5p"/>
+<div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center font-label-sm text-label-sm text-on-surface">+2</div>
+</div>
+</div>
+<!-- Chat Messages -->
+<div class="flex-1 overflow-y-auto hide-scrollbar flex flex-col gap-sm pb-sm">
+<!-- Received Message (Sarah) -->
+<div class="flex items-start gap-xs max-w-[85%]">
+<img alt="Sarah" class="w-8 h-8 rounded-full border-2 border-primary-container object-cover mt-1" data-alt="A portrait of an adventurous young woman smiling brightly, wearing a casual orange top. Modern Explorer style, bright soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa3VbBMoF7UOCZb7qXNevWk2lFstvsVwrNAAAs8lJA_kXdkGNfjWHPXZ8g45K_ESIRX892fy3Q3VwAXUlaEi0CuKYV7p6JipymPBCCqzklFkZR1I-ndm7gZwEPT4OFCNhGCnUtW3wyIp53bH45x1a5T_vKa0jIgmHX9ybm2xTEMqyHn2WsIIzui3si7WLsF4Cobc0tiBMNA6lMJHh51zUkxXZJO-8FnuSZ_Tin_rh8mauhwPALQD5s"/>
+<div>
+<div class="flex items-baseline gap-xs mb-1">
+<span class="font-label-sm text-label-sm text-on-surface">Sarah</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">10:15 AM</span>
+</div>
+<div class="bg-surface-container-low p-sm rounded-2xl rounded-tl-sm shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)] border border-surface-variant/50">
+<p class="font-body-md text-body-md text-on-surface">Just looked up the train schedules for tomorrow. We should leave by 8 AM to beat the rush!</p>
+</div>
+</div>
+</div>
+<!-- Received Message (Mike) -->
+<div class="flex items-start gap-xs max-w-[85%]">
+<img alt="Mike" class="w-8 h-8 rounded-full border-2 border-[#8b5cf6] object-cover mt-1" data-alt="A portrait of a male traveler with a modern haircut, looking thoughtful. Crisp, clean lighting against a light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSYjjXcaRYRtUP-hk3IbPq9oCrI2uNXLPOrEJKKgOQ8TvfiLJDW4PScWThdcOm_IWpS5lakGFIq568L2Sa2TtLo8_yR00ftHBenHUVi4Sko-oni_0fhfIh8B4r6m614zOFe53wEvC2MREwfMuzIa0q2kjAzwgYFwZEPma3CqQgh7zyrzUkArS2cV8lmxppRTrhPI7vPhtdtHDX-Ks8_TuyFaZm3xHJV1-R3rsjhT7MGRi061IkDKux"/>
+<div>
+<div class="flex items-baseline gap-xs mb-1">
+<span class="font-label-sm text-label-sm text-on-surface">Mike</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">10:22 AM</span>
+</div>
+<div class="bg-surface-container-low p-sm rounded-2xl rounded-tl-sm shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)] border border-surface-variant/50">
+<p class="font-body-md text-body-md text-on-surface">Sounds good to me. Are we still doing the day trip?</p>
+</div>
+</div>
+</div>
+<!-- Sent Poll (You) -->
+<div class="flex items-end justify-end gap-xs w-full mt-2">
+<div class="max-w-[90%]">
+<div class="flex items-baseline justify-end gap-xs mb-1">
+<span class="font-label-sm text-[10px] text-on-surface-variant">10:30 AM</span>
+<span class="font-label-sm text-label-sm text-on-surface">You</span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-sm rounded-2xl rounded-tr-sm shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">poll</span>
+<h3 class="font-label-md text-label-md text-on-surface">Day Trip to Hakone</h3>
+</div>
+<div class="space-y-2">
+<button class="w-full text-left bg-surface p-2 rounded-lg border border-primary-container/30 hover:border-primary-container transition-colors flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface">Yes, let's go!</span>
+<div class="flex -space-x-1">
+<div class="w-4 h-4 rounded-full bg-primary-container border border-white"></div>
+<div class="w-4 h-4 rounded-full bg-[#8b5cf6] border border-white"></div>
+</div>
+</button>
+<button class="w-full text-left bg-surface p-2 rounded-lg border border-surface-variant hover:border-outline-variant transition-colors flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Maybe later</span>
+</button>
+</div>
+<div class="mt-2 text-right">
+<span class="font-label-sm text-[10px] text-primary">2 votes • Closes soon</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="mt-sm flex gap-xs items-end bg-surface border border-surface-variant rounded-xl p-1 focus-within:ring-2 focus-within:ring-primary-container focus-within:border-transparent transition-all">
+<button class="p-2 text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 py-2 hide-scrollbar" placeholder="Type a message..." rows="1"></textarea>
+<button class="p-2 bg-primary-container text-white rounded-lg hover:bg-primary transition-colors h-10 w-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</section>
+<!-- Divider with grabber -->
+<div class="w-full flex justify-center py-2 bg-surface cursor-ns-resize border-y border-surface-variant/50">
+<div class="w-12 h-1 bg-surface-variant rounded-full"></div>
+</div>
+<!-- Collaboration Canvas (Bottom Half) -->
+<section class="h-1/3 bg-surface-container-lowest p-margin-mobile flex flex-col relative overflow-hidden">
+<!-- Topography Pattern Overlay -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #1c1b1b 1px, transparent 2px, transparent 20px);"></div>
+<div class="flex justify-between items-center mb-sm relative z-10">
+<h2 class="font-label-md text-label-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-primary-container">dashboard</span>
+                    Collaboration Canvas
+                </h2>
+<button class="text-primary font-label-sm text-label-sm flex items-center gap-1 hover:underline">
+                    View All <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Horizontal Scroll Area for Pinned Items -->
+<div class="flex-1 overflow-x-auto hide-scrollbar flex gap-sm pb-2 relative z-10 snap-x">
+<!-- Pinned Link -->
+<div class="min-w-[200px] w-[200px] bg-surface rounded-xl p-sm shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)] border border-surface-variant flex flex-col justify-between snap-start group hover:border-outline-variant transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="w-8 h-8 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">train</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">keep</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1 mb-1">Guide to Tokyo's Metro</h3>
+<p class="font-label-sm text-[10px] text-on-surface-variant line-clamp-2">Essential passes and routes for our first 3 days.</p>
+</div>
+<div class="mt-2 pt-2 border-t border-surface-variant flex justify-between items-center">
+<span class="font-label-sm text-[10px] text-secondary">Added by Sarah</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></div> <!-- Live indicator -->
+</div>
+</div>
+<!-- Pinned Note -->
+<div class="min-w-[200px] w-[200px] bg-[#fffbf0] rounded-xl p-sm shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)] border border-[#fde68a] flex flex-col justify-between snap-start relative">
+<div class="absolute top-2 right-2 w-6 h-6 rounded-full border-2 border-white object-cover shadow-sm bg-surface overflow-hidden">
+<img alt="Mike pinned this" class="w-full h-full object-cover" data-alt="A portrait of a male traveler with a modern haircut, looking thoughtful. Crisp, clean lighting against a light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV-d1whkP0P4xoSRpYhYPJPQFURm_WpHmj71p6HyeUtbBM8sVpFHa80R8SjzLJTXz_j35R6YLZ5p0MBHkPR-_GU3DTaTUklPDJxdjgSW0iQ0dHQvZIK2tS713XoMzkT1hzavL3DtcsQciCBJzfMWNDH-W1kcqc9FZXeJmV-q2GcfZ4UdjNNL-XjwbwnYU0fP5lGDYPUVpcgA0Jb0X7jxKqQYzgBKwdzd5TS7PdYjATdomvcRn88d-r"/>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div class="w-8 h-8 rounded-lg bg-[#fef3c7] text-[#92400e] flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1 mb-1">Souvenir List</h3>
+<ul class="font-label-sm text-[10px] text-on-surface-variant space-y-1 pl-3 list-disc">
+<li>Matcha from Kyoto</li>
+<li>Ceramics for mom</li>
+</ul>
+</div>
+<div class="mt-2 flex justify-end">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">open_in_new</span>
+</div>
+</div>
+<!-- Add New Module -->
+<div class="min-w-[120px] w-[120px] bg-surface-container-lowest rounded-xl border-2 border-dashed border-surface-variant flex flex-col items-center justify-center snap-start hover:bg-surface-container-low transition-colors cursor-pointer text-secondary hover:text-primary-container">
+<span class="material-symbols-outlined mb-2 text-[24px]">add</span>
+<span class="font-label-sm text-label-sm">Add Item</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full rounded-t-xl bg-surface dark:bg-surface-container-lowest shadow-[0px_-4px_20px_0px_rgba(0,0,0,0.05)] shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 md:hidden">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined mb-1">map</span>
+<span class="font-label-sm text-label-sm">Itinerary</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="font-label-sm text-label-sm">Budget</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-90 transition-all duration-200 hover:bg-surface-container dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined mb-1">group</span>
+<span class="font-label-sm text-label-sm">Group</span>
+</a>
+</nav>
+</body></html>

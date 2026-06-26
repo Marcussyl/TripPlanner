@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TripSync - Collaborative Itinerary Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#ffb59c",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#d5e3fd",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#390c00",
+                        "surface-bright": "#fcf9f8",
+                        "primary-fixed": "#ffdbcf",
+                        "outline": "#8f7066",
+                        "on-tertiary-container": "#292d2f",
+                        "surface-container-high": "#ebe7e7",
+                        "surface-tint": "#ab3600",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "secondary": "#515f74",
+                        "outline-variant": "#e3bfb3",
+                        "inverse-surface": "#313030",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "primary-fixed-dim": "#ffb59c",
+                        "on-background": "#1c1b1b",
+                        "surface-container": "#f0edec",
+                        "primary-container": "#ff5f1f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#5c5f61",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-error-container": "#93000a",
+                        "surface": "#fcf9f8",
+                        "primary": "#ab3600",
+                        "inverse-on-surface": "#f3f0ef",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d5e3fd",
+                        "tertiary-container": "#919496",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-primary-container": "#561700",
+                        "on-primary-fixed-variant": "#832700",
+                        "on-secondary-container": "#57657b",
+                        "background": "#fcf9f8",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-low": "#f6f3f2",
+                        "on-surface-variant": "#5b4138",
+                        "surface-dim": "#dcd9d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "margin-mobile": "16px",
+                        "xl": "64px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "margin-desktop": "48px",
+                        "sm": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .map-grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(143, 112, 102, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(143, 112, 102, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #e3bfb3;
+            z-index: 0;
+        }
+        
+        .timeline-item:last-child .timeline-line::before {
+            display: none;
+        }
+
+        .cursor-bounce {
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        
+        .pulse-ring {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .5; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-hidden flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant flat no shadows">
+<div class="flex items-center gap-gutter">
+<h1 class="text-headline-md font-headline-md font-black text-primary">TripSync</h1>
+<nav class="hidden md:flex gap-md">
+<a class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:opacity-80 font-label-md text-label-md flex items-center h-16" href="#">
+                    Explore
+                </a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:opacity-80 font-label-md text-label-md flex items-center h-16" href="#">
+                    Community
+                </a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<!-- Search on right -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-xs top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-lg py-xs pr-sm text-label-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-48 transition-all" placeholder="Search places..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-surface"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A detailed headshot portrait of an adventurous traveler looking enthusiastically off-camera. The lighting is bright and sunny, conveying a positive, energetic mood consistent with an active outdoor lifestyle. High-contrast photography style with vibrant, natural colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxJrP-JHUF90vrpin9T0LUJVzQe_T63nMpgb3hQ3IJDT5sjwMnNbJWdWTK3uAaMAQ-KfPS_-nT4eR1RBZwgBS_9kCAvnBepqqel0toWDUhu7INegZsuV_ylTAvOKQGNukbFD6YMeDHMWgeeCJESt7e2ph6vZUTBVtJb6AOYjX7yKGHcF7Z4wkfW-bRZ89Qek5r_y6ZN-ptv-HM6OAPfJYO-BjOKxRBc2DANYAU-ZEJkc2FeU7yAs4Z"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-16 h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] p-sm w-64 bg-surface-container-low border-r border-outline-variant shadow-sm z-40">
+<div class="mb-lg px-xs py-sm">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">landscape</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary leading-tight">Summer in Tokyo</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">4 Collaborators</p>
+</div>
+</div>
+<!-- Live Collaborators Avatars -->
+<div class="flex -space-x-2 mt-xs ml-xs">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-emerald-500 overflow-hidden relative">
+<img alt="Collaborator 1" class="w-full h-full object-cover" data-alt="Portrait photo of a young woman with a warm smile, casual travel attire, bright daylight illumination, clear focus, optimistic and modern style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo1u61kr1cwWKKT7HSi3YofNs3TGao9BjI6yI8uJWIqhAHZdRFTzE26xTDLOym6SjRffRMkMT-nQRRfQ_CXhhEn-icOxslKXmzFU1obuQNxO6PbZBJYMHm6DvrQfNb7MWaGkxozbVoik5qVLCWa3FxYXlcw_b1uZ_3ZNwmLXXjqHcXe8o7IAdKdZCKy-ExEHRz-3B337pHjIcNEHDKCyV-fhniLpahBG77uH0eawUTRrFejXlFEG9v"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-blue-500 overflow-hidden relative">
+<img alt="Collaborator 2" class="w-full h-full object-cover" data-alt="Portrait photo of a man with glasses looking thoughtful, urban background out of focus, natural soft lighting, modern contemporary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAmIv4sw9LFQCTwo3pv0q4cdWhRYrDzlZPfDZzVpgncL6g9brw6ErPH-t9vkLRxj_AsP2sjchvjCzGaX9ZyKidRN7R0zqowHLWEBzC-34sSu410ikGWcSpfICnp08ryuhdnaVCXDvPTSVoEpCmRXKh7De-vjHlT4mUmBp-frr2qF8JGtpvu3pOP9LRdYPSDAk8PGsl8V5y2k8BMBheVbtpW9AO2-lmf9tYLiXzlfjF8kftqK_ARTP5"/>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-variant flex items-center justify-center text-label-sm text-on-surface-variant">
+                        +2
+                    </div>
+</div>
+</div>
+<div class="flex flex-col gap-base flex-1">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant rounded-lg px-sm py-xs transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-lg px-sm py-xs font-bold transition-all duration-200 ease-in-out font-label-md text-label-md shadow-[0_4px_20px_rgba(41,45,47,0.05)] border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+                    Itinerary
+                </a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant rounded-lg px-sm py-xs transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+                    Budget
+                </a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant rounded-lg px-sm py-xs transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                    Group Hub
+                </a>
+</div>
+<div class="mt-auto pt-sm border-t border-outline-variant/50 flex flex-col gap-base">
+<button class="w-full py-xs px-sm bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm mb-sm flex justify-center items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                    Invite Explorer
+                </button>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant rounded-lg px-sm py-xs transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-variant rounded-lg px-sm py-xs transition-all duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Support
+                </a>
+</div>
+</nav>
+<!-- Main Content Area (Split Screen) -->
+<main class="flex-1 flex flex-col md:flex-row md:ml-64 h-full relative">
+<!-- Left Side: Timeline (Itinerary) -->
+<div class="w-full md:w-1/2 lg:w-5/12 xl:w-1/3 bg-surface-container-lowest h-full overflow-y-auto border-r border-outline-variant relative z-10 custom-scrollbar pb-xl">
+<div class="p-lg sticky top-0 bg-surface-container-lowest/95 backdrop-blur z-20 border-b border-outline-variant/30 flex justify-between items-center">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-background">Day 1</h2>
+<p class="font-label-sm text-label-sm text-tertiary">Tuesday, June 12 • Arrival</p>
+</div>
+<div class="flex gap-xs">
+<button class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface hover:bg-outline-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface hover:bg-outline-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="p-md pt-sm">
+<!-- Timeline Item 1 -->
+<div class="relative timeline-item mb-md">
+<div class="timeline-line"></div>
+<div class="flex gap-sm relative z-10">
+<!-- Time Column -->
+<div class="w-16 flex flex-col items-center pt-xs">
+<span class="font-label-sm text-label-sm text-secondary font-bold">10:00</span>
+<span class="font-label-sm text-[10px] text-tertiary">AM</span>
+<div class="w-4 h-4 rounded-full bg-primary-container border-2 border-surface mt-sm z-10"></div>
+</div>
+<!-- Card Content -->
+<div class="flex-1 bg-surface rounded-xl p-sm shadow-[0_4px_20px_rgba(41,45,47,0.05)] border border-outline-variant/30 relative group hover:border-outline-variant transition-colors">
+<div class="flex justify-between items-start mb-xs">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-[10px] font-bold uppercase tracking-wider">Flight</span>
+<button class="text-tertiary hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<h3 class="font-label-md text-label-md text-on-background mb-1">Arrive at NRT</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant mb-sm">Flight JL001 from SFO. Terminal 2.</p>
+<div class="flex items-center gap-xs text-tertiary font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>2h duration</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 (Conflict Alert) -->
+<div class="relative timeline-item mb-md">
+<div class="timeline-line"></div>
+<!-- Live Editor Cursor indicating someone is editing near here -->
+<div class="absolute left-[80px] -top-3 z-30 cursor-bounce flex flex-col items-start">
+<span class="material-symbols-outlined text-blue-500 text-[18px] transform -scale-x-100 rotate-45" style="font-variation-settings: 'FILL' 1;">near_me</span>
+<div class="bg-blue-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap ml-3 -mt-1">
+                                Sarah
+                            </div>
+</div>
+<div class="flex gap-sm relative z-10">
+<div class="w-16 flex flex-col items-center pt-xs">
+<span class="font-label-sm text-label-sm text-secondary font-bold">12:30</span>
+<span class="font-label-sm text-[10px] text-tertiary">PM</span>
+<!-- Conflict indicator dot -->
+<div class="w-4 h-4 rounded-full bg-error border-2 border-surface mt-sm z-10 pulse-ring relative">
+<span class="absolute -inset-1 rounded-full border border-error opacity-50 pulse-ring"></span>
+</div>
+</div>
+<div class="flex-1 bg-error-container/20 rounded-xl p-sm shadow-[0_4px_20px_rgba(41,45,47,0.05)] border border-error/40 relative">
+<!-- Conflict Badge -->
+<div class="absolute -top-3 -right-2 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-lg shadow-md flex items-center gap-1 z-20">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                                    Time Conflict
+                                </div>
+<div class="flex justify-between items-start mb-xs">
+<span class="px-2 py-0.5 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">Transport</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-background mb-1">Narita Express to City</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant mb-sm">Train leaves exactly at 12:45. Need to hustle from baggage claim.</p>
+<div class="p-2 bg-surface-container-low rounded border border-outline-variant/50 mt-2">
+<p class="text-[11px] text-error font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                                        Overlaps with "Hotel Check-in"
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 (Active Highlight) -->
+<div class="relative timeline-item mb-md">
+<div class="timeline-line"></div>
+<div class="flex gap-sm relative z-10">
+<div class="w-16 flex flex-col items-center pt-xs">
+<span class="font-label-sm text-label-sm text-secondary font-bold">13:00</span>
+<span class="font-label-sm text-[10px] text-tertiary">PM</span>
+<div class="w-5 h-5 rounded-full bg-surface border-4 border-primary mt-sm z-10 shadow-sm relative">
+<div class="absolute inset-0 bg-primary rounded-full m-0.5"></div>
+</div>
+</div>
+<div class="flex-1 bg-surface rounded-xl p-sm shadow-[0_8px_24px_rgba(41,45,47,0.12)] border-l-4 border-l-primary border-y border-r border-outline-variant relative">
+<div class="flex justify-between items-start mb-xs">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-[10px] font-bold uppercase tracking-wider">Lodging</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-background mb-1">Hotel Check-in</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant mb-sm">Shinjuku Granbell Hotel. Reservation: #89432A.</p>
+<div class="mt-sm flex gap-xs">
+<button class="px-3 py-1.5 bg-primary text-on-primary rounded text-[12px] font-medium hover:bg-surface-tint transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">directions</span>
+                                        Directions
+                                    </button>
+<button class="px-3 py-1.5 bg-transparent border border-outline text-on-surface-variant rounded text-[12px] font-medium hover:bg-surface-variant transition-colors">
+                                        Details
+                                    </button>
+</div>
+<!-- Active Editor Indicator -->
+<div class="absolute -bottom-2 -right-2 flex -space-x-1">
+<div class="w-6 h-6 rounded-full border-2 border-surface bg-emerald-500 overflow-hidden">
+<img alt="Editor" class="w-full h-full object-cover" data-alt="Portrait photo of a young woman with a warm smile, casual travel attire, bright daylight illumination, clear focus, optimistic and modern style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH_HjlQPdsq3DnEk-Tiw71As_ijCb3zkDDZUdrthlZlN8oJz2zIisDQDcQHnKPaJlS-vUL_m2tRTH9SR3szF-ix6EZ39t6d3etLBlIfEszETr8rULitYEp4rL2FYtTLlmYjAtVm4IeNAk-oZuDMaBveouOI0BsznLCZNuS7xSuHMGRj5oukqbhzJgdls06ZeRQvOmVEoFZFH-IvOR7Nm3XW-G-EStDk6fkkfQigg5bntB3tIZvbGF4"/>
+</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-surface flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-primary rounded-full pulse-ring"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add New Button -->
+<div class="pl-[84px] mt-lg">
+<button class="w-full py-2 border-2 border-dashed border-outline-variant text-tertiary rounded-lg font-label-md hover:bg-surface-variant hover:text-on-surface transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                            Add Activity
+                        </button>
+</div>
+</div>
+</div>
+<!-- Right Side: Interactive Map View -->
+<div class="flex-1 bg-surface-dim relative overflow-hidden hidden md:block">
+<!-- Map Canvas Background (Simulated) -->
+<div class="absolute inset-0 bg-[#f0eadd] map-grid-bg" data-location="Tokyo" style="">
+<!-- Subtle abstract shapes to imply geography without complex image loading -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary-container/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary-fixed/20 rounded-full blur-3xl"></div>
+</div>
+<!-- Map Overlay UI -->
+<div class="absolute top-sm right-sm z-20 flex flex-col gap-sm">
+<div class="bg-surface rounded-lg shadow-[0_4px_20px_rgba(41,45,47,0.1)] p-1 flex flex-col border border-outline-variant/30">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<div class="w-6 h-px bg-outline-variant/50 mx-auto my-0.5"></div>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+</div>
+<button class="w-10 h-10 bg-surface rounded-lg shadow-[0_4px_20px_rgba(41,45,47,0.1)] border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">my_location</span>
+</button>
+</div>
+<!-- Map Pins and Connections -->
+<div class="absolute inset-0 z-10 pointer-events-none">
+<!-- Route Line SVG -->
+<svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<path class="opacity-50" d="M 200 300 Q 350 250 450 400" fill="none" stroke="#ab3600" stroke-dasharray="6,4" stroke-width="2"></path>
+</svg>
+<!-- Pin 1: Airport -->
+<div class="absolute top-[300px] left-[200px] transform -translate-x-1/2 -translate-y-full pointer-events-auto cursor-pointer group">
+<div class="bg-surface px-3 py-1.5 rounded-lg shadow-sm border border-outline-variant mb-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+<span class="font-label-sm text-[12px] font-bold">Narita Airport</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-md mx-auto relative border-2 border-surface">
+<span class="material-symbols-outlined text-[16px]">flight_land</span>
+<div class="absolute -bottom-1 left-1/2 w-2 h-2 bg-secondary transform rotate-45 -translate-x-1/2"></div>
+</div>
+</div>
+<!-- Pin 2: Hotel (Active) -->
+<div class="absolute top-[400px] left-[450px] transform -translate-x-1/2 -translate-y-full pointer-events-auto cursor-pointer z-20">
+<div class="bg-surface px-3 py-1.5 rounded-lg shadow-[0_8px_24px_rgba(41,45,47,0.12)] border-2 border-primary mb-1 flex items-center gap-1 whitespace-nowrap relative">
+<span class="font-label-sm text-[12px] font-bold text-primary">Shinjuku Granbell</span>
+<div class="absolute -bottom-1.5 left-1/2 w-2 h-2 bg-primary transform rotate-45 -translate-x-1/2 border-r-2 border-b-2 border-primary"></div>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg mx-auto relative border-2 border-surface z-10">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">hotel</span>
+<div class="absolute -bottom-1 left-1/2 w-3 h-3 bg-primary transform rotate-45 -translate-x-1/2 z-[-1]"></div>
+</div>
+<!-- Collab Indicator on Map -->
+<div class="absolute -right-3 -top-3 cursor-bounce flex flex-col items-center pointer-events-none">
+<span class="material-symbols-outlined text-emerald-500 text-[24px] transform -scale-x-100 rotate-45" style="font-variation-settings: 'FILL' 1;">near_me</span>
+</div>
+</div>
+<!-- Pin 3: Conflict Location -->
+<div class="absolute top-[350px] left-[320px] transform -translate-x-1/2 -translate-y-full pointer-events-auto cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-error text-on-error flex items-center justify-center shadow-md mx-auto relative border-2 border-surface pulse-ring">
+<span class="material-symbols-outlined text-[16px]">train</span>
+<div class="absolute -bottom-1 left-1/2 w-2 h-2 bg-error transform rotate-45 -translate-x-1/2"></div>
+</div>
+</div>
+</div>
+<!-- Floating Bottom Panel (Quick Stats) -->
+<div class="absolute bottom-lg left-1/2 transform -translate-x-1/2 z-20 bg-surface/90 backdrop-blur-md rounded-full px-lg py-xs shadow-[0_8px_24px_rgba(41,45,47,0.08)] border border-outline-variant/50 flex items-center gap-lg">
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-[10px] text-tertiary uppercase tracking-widest">Total Distance</span>
+<span class="font-headline-md text-[16px] text-on-background font-bold">42 km</span>
+</div>
+<div class="w-px h-6 bg-outline-variant"></div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-[10px] text-tertiary uppercase tracking-widest">Est. Cost</span>
+<span class="font-headline-md text-[16px] text-on-background font-bold">¥12,500</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
