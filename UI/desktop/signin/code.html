@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign In | Modern Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Component Styling Logic -->
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf9f8; /* surface */
+            color: #1c1b1b; /* on-surface */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#1c1b1b",
+                    "outline-variant": "#e3bfb3",
+                    "surface": "#fcf9f8",
+                    "on-surface-variant": "#5b4138",
+                    "primary-container": "#ff5f1f",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#561700",
+                    "surface-bright": "#fcf9f8",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "secondary": "#515f74",
+                    "surface-dim": "#dcd9d9",
+                    "surface-tint": "#ab3600",
+                    "surface-container-low": "#f6f3f2",
+                    "background": "#fcf9f8",
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-surface": "#313030",
+                    "primary-fixed-dim": "#ffb59c",
+                    "primary-fixed": "#ffdbcf",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e5e2e1",
+                    "inverse-on-surface": "#f3f0ef",
+                    "secondary-container": "#d5e3fd",
+                    "on-primary-fixed-variant": "#832700",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#e0e3e5",
+                    "secondary-fixed-dim": "#b9c7e0",
+                    "secondary-fixed": "#d5e3fd",
+                    "outline": "#8f7066",
+                    "tertiary-container": "#919496",
+                    "on-tertiary-container": "#292d2f",
+                    "on-secondary-fixed": "#0d1c2f",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#3a485c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "surface-container": "#f0edec",
+                    "on-secondary-container": "#57657b",
+                    "on-primary-fixed": "#390c00",
+                    "on-background": "#1c1b1b",
+                    "tertiary": "#5c5f61",
+                    "primary": "#ab3600",
+                    "inverse-primary": "#ffb59c",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#ebe7e7",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "lg": "40px",
+                    "margin-desktop": "48px",
+                    "base": "4px",
+                    "xl": "64px",
+                    "md": "24px",
+                    "xs": "8px",
+                    "sm": "16px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen overflow-x-hidden">
+<!-- TopNavBar - Contextual Suppression Check: Login page usually suppresses main nav links, 
+         but instructed to include it. Trailing primary action remains. -->
+<header class="bg-surface/80 backdrop-blur-lg w-full top-0 sticky border-b border-outline-variant z-50">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 w-full">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-[32px] font-extrabold text-primary">Modern Explorer</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant hover:text-primary-container transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="#">Explore</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="#">Community</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md transition-all active:scale-95 cursor-pointer">
+                    Sign Up
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content: Split Layout -->
+<main class="flex-grow flex flex-col md:flex-row">
+<!-- Left Side: Hero Image (Hero) -->
+<section class="hidden md:block md:w-1/2 relative overflow-hidden bg-surface-dim">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-[10000ms] hover:scale-110" data-alt="A breathtaking high-angle view of a winding road through the Italian Dolomites during golden hour. The landscape is bathed in warm Action Orange sunlight, casting long shadows across jagged peaks and lush green valleys. The composition is clean and expansive, reflecting the adventurous spirit of a Modern Explorer. The color palette is dominated by earthy siennas, deep slate blues, and vibrant sunset oranges, evoking a sense of optimistic journey and discovery." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyL88NK73oUODYSbkR0vMNAvXlaItWwUABNojEicGlh5rQSFiEpQmwcw-0UFk7PJDC724R91lH2UessT_kC6Xox-YTT4MGKthmueO-kCLW6jgyCOqNY-uEj0qAahOTe_de7aKGFLrkp7VheVGlnOj-cuL9yfx5M_u7qMMBOM5GSfWoXIMlWoB8XTHo1m23in1n1InL_4BChWu2Uz8_s0IMFnhTvc1xGyoBGl4_okpEom3HercPe5pr')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-surface/20"></div>
+<div class="absolute bottom-margin-desktop left-margin-desktop max-w-md p-8 glass-effect bg-surface/10 rounded-2xl border border-white/20">
+<h2 class="font-headline-lg text-headline-lg text-white mb-2">Every journey starts with a single plan.</h2>
+<p class="font-body-md text-body-md text-white/90">Join 10,000+ explorers organizing their next adventure with ease and collaboration.</p>
+</div>
+</section>
+<!-- Right Side: Sign-In Form -->
+<section class="w-full md:w-1/2 flex items-center justify-center p-margin-mobile md:p-margin-desktop bg-surface">
+<div class="w-full max-w-md space-y-8">
+<!-- Heading Group -->
+<div class="space-y-2">
+<h1 class="font-display-lg text-[40px] text-on-surface">Welcome back, Explorer</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Enter your details to pick up where you left off.</p>
+</div>
+<!-- Form Fields -->
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant" for="email">Email Address</label>
+<input class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-all font-body-md text-body-md" id="email" placeholder="name@adventure.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline transition-all" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<input class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-all font-body-md text-body-md" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full py-4 bg-primary-container text-on-primary-container rounded-lg font-headline-md text-headline-md shadow-lg shadow-primary-container/20 hover:brightness-90 transition-all active:scale-[0.98]">
+                        Sign In
+                    </button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 font-label-sm text-label-sm text-on-surface-variant">or continue with</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 py-3 border-2 border-on-surface/10 rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                        Google
+                    </button>
+<button class="flex items-center justify-center gap-3 py-3 border-2 border-on-surface/10 rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M17.05 20.28c-.96.95-2.06 1.72-3.32 1.72s-1.81-.7-3.41-.7-2.14.7-3.41.7-2.36-.77-3.32-1.72c-2.06-2.06-2.06-5.41 0-7.47.96-.95 2.06-1.43 3.32-1.43 1.26 0 2.21.6 3.41.6s2.15-.6 3.41-.6c1.26 0 2.36.48 3.32 1.43 1.03 1.03 1.54 2.37 1.54 3.73s-.51 2.71-1.54 3.74zM12 2.19c.14 0 .28 0 .42.02-.1.97-.68 1.96-1.55 2.83-.87.87-1.88 1.45-2.83 1.55.02-.14.02-.28.02-.42 0-1.11.45-2.22 1.25-3.02.8-.8 1.91-1.25 3.02-1.25z" fill="currentColor"></path>
+</svg>
+                        Apple
+                    </button>
+</div>
+<!-- Footer Link -->
+<p class="text-center font-body-md text-body-md text-on-surface-variant">
+                    New to Modern Explorer? 
+                    <a class="text-primary font-semibold hover:underline" href="#">Create an account</a>
+</p>
+</div>
+</section>
+</main>
+<!-- Footer - Transactional Context Mapping -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full mt-auto border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-8">
+<div class="mb-6 md:mb-0">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Modern Explorer</span>
+<p class="font-label-sm text-label-sm text-on-secondary-fixed-variant mt-2">© 2024 Modern Explorer. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-sm text-label-sm cursor-pointer" href="#">Privacy Policy</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-sm text-label-sm cursor-pointer" href="#">Terms of Service</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-sm text-label-sm cursor-pointer" href="#">Help Center</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-sm text-label-sm cursor-pointer" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+<!-- Interactive Layer: Atmospheric Subtle Scroll Fade In -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.style.opacity = '0';
+            form.style.transform = 'translateY(20px)';
+            form.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            
+            setTimeout(() => {
+                form.style.opacity = '1';
+                form.style.transform = 'translateY(0)';
+            }, 200);
+
+            // Interaction for social buttons
+            const socialButtons = document.querySelectorAll('button:not([type="submit"])');
+            socialButtons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    btn.classList.add('shadow-md');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.classList.remove('shadow-md');
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,287 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TripRole {
+  owner
+  editor
+  viewer
+}
+
+enum ActivityType {
+  flight
+  transport
+  lodging
+  activity
+}
+
+enum SplitType {
+  equal
+  exact
+  percentage
+}
+
+enum PinType {
+  image
+  link
+  note
+}
+
+enum ExpenseCategory {
+  food
+  transport
+  lodging
+  activities
+  shopping
+  other
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  avatarUrl     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts           Account[]
+  sessions           Session[]
+  tripMembers        TripMember[]
+  expensesPaid       Expense[]      @relation("ExpensePayer")
+  expenseSplits      ExpenseSplit[]
+  chatMessages       ChatMessage[]
+  canvasPins         CanvasPin[]
+  pollsCreated       Poll[]         @relation("PollCreator")
+  votes              Vote[]
+  tripInvitesCreated TripInvite[]   @relation("InviteCreator")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Trip {
+  id          String   @id @default(cuid())
+  name        String
+  destination String
+  startDate   DateTime
+  endDate     DateTime
+  coverImage  String?
+  budgetLimit Decimal? @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members       TripMember[]
+  invites       TripInvite[]
+  itineraryDays ItineraryDay[]
+  expenses      Expense[]
+  chatMessages  ChatMessage[]
+  canvasPins    CanvasPin[]
+  polls         Poll[]
+}
+
+model TripMember {
+  id        String   @id @default(cuid())
+  tripId    String
+  userId    String
+  role      TripRole @default(viewer)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([tripId, userId])
+}
+
+model TripInvite {
+  id           String    @id @default(cuid())
+  token        String    @unique @default(cuid())
+  tripId       String
+  role         TripRole  @default(editor)
+  createdById  String
+  expiresAt    DateTime
+  acceptedAt   DateTime?
+  acceptedById String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  trip      Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  createdBy User @relation("InviteCreator", fields: [createdById], references: [id])
+
+  @@index([token])
+}
+
+model ItineraryDay {
+  id        String   @id @default(cuid())
+  tripId    String
+  dayNumber Int
+  date      DateTime
+  label     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trip       Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  activities Activity[]
+
+  @@unique([tripId, dayNumber])
+}
+
+model Activity {
+  id        String       @id @default(cuid())
+  dayId     String
+  type      ActivityType
+  title     String
+  startTime DateTime?
+  duration  Int?
+  lat       Float?
+  lng       Float?
+  notes     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  day      ItineraryDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  expenses Expense[]
+
+  @@index([dayId, startTime])
+}
+
+model Expense {
+  id               String          @id @default(cuid())
+  tripId           String
+  title            String
+  amount           Decimal         @db.Decimal(10, 2)
+  category         ExpenseCategory
+  payerId          String
+  splitType        SplitType       @default(equal)
+  linkedActivityId String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  trip           Trip           @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  payer          User           @relation("ExpensePayer", fields: [payerId], references: [id])
+  linkedActivity Activity?      @relation(fields: [linkedActivityId], references: [id], onDelete: SetNull)
+  splits         ExpenseSplit[]
+
+  @@index([tripId, createdAt])
+}
+
+model ExpenseSplit {
+  id        String   @id @default(cuid())
+  expenseId String
+  userId    String
+  amount    Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  expense Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([expenseId, userId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  tripId    String
+  userId    String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tripId, createdAt])
+}
+
+model CanvasPin {
+  id          String   @id @default(cuid())
+  tripId      String
+  type        PinType
+  content     String   @db.Text
+  category    String?
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  trip      Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  createdBy User @relation(fields: [createdById], references: [id])
+}
+
+model Poll {
+  id          String    @id @default(cuid())
+  tripId      String
+  question    String
+  closesAt    DateTime?
+  createdById String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  trip    Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  createdBy User       @relation("PollCreator", fields: [createdById], references: [id])
+  options PollOption[]
+}
+
+model PollOption {
+  id        String   @id @default(cuid())
+  pollId    String
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  poll  Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes Vote[]
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  pollOptionId String
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([pollOptionId, userId])
+}
