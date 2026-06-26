@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { PresenceAvatarStack } from '@/components/trip/presence-avatar-stack';
+import { SignOutButton } from '@/components/auth/sign-out-button';
 
 const NAV_ITEMS = [
   { href: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
   { href: 'itinerary', label: 'Itinerary', icon: 'map' },
   { href: 'budget', label: 'Budget', icon: 'payments' },
   { href: 'group-hub', label: 'Group Hub', icon: 'forum' },
-  { href: 'realtime-demo', label: 'Realtime', icon: 'sensors' },
 ] as const;
 
 type TripSidebarProps = {
@@ -64,7 +64,8 @@ export function TripSidebar({ tripId, tripName, memberCount, members }: TripSide
         })}
       </nav>
 
-      <div className="border-t border-outline-variant/50 p-4">
+      <div className="border-t border-outline-variant/50 p-4 space-y-2">
+        <SignOutButton />
         <Link
           href="/trips"
           className="flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"

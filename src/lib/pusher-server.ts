@@ -1,11 +1,12 @@
 import Pusher from 'pusher';
 import {
   parsePresenceChannel,
+  parsePrivateChannel,
   tripPresenceChannel,
   tripPrivateChannel,
 } from '@/lib/realtime/channels';
 
-export { parsePresenceChannel, tripPresenceChannel, tripPrivateChannel };
+export { parsePresenceChannel, parsePrivateChannel, tripPresenceChannel, tripPrivateChannel };
 
 export function getPusherServer() {
   const appId = process.env.PUSHER_APP_ID;

@@ -10,3 +10,8 @@ export function parsePresenceChannel(channelName: string): string | null {
   const match = channelName.match(/^presence-trip-(.+)$/);
   return match?.[1] ?? null;
 }
+
+export function parsePrivateChannel(channelName: string): string | null {
+  const match = channelName.match(/^private-trip-(.+)$/);
+  return match?.[1] ?? null;
+}
