@@ -173,4 +173,26 @@
   .shadow-level-3 {
     box-shadow: 0 8px 24px rgb(28 27 27 / 12%);
   }
+
+  .map-grid-bg {
+    background-image:
+      linear-gradient(to right, rgb(143 112 102 / 10%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(143 112 102 / 10%) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .itinerary-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 31px;
+    top: 40px;
+    bottom: -16px;
+    width: 2px;
+    background-color: #e3bfb3;
+    z-index: 0;
+  }
+
+  .itinerary-timeline-item:last-child::before {
+    display: none;
+  }
 }

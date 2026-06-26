@@ -1,5 +1,6 @@
 export type ActivityForConflict = {
   id: string;
+  title?: string;
   startTime: Date | string | null;
   duration: number | null;
 };
@@ -33,4 +34,34 @@ export function detectConflicts(activities: ActivityForConflict[]): Set<string> 
   }
 
   return conflicting;
+}
+
+export function getConflictPartners(
+  activities: Array<ActivityForConflict & { title: string }>,
+): Map<string, string> {
+  const partners = new Map<string, string>();
+  const timed = activities
+    .filter((activity) => activity.startTime != null && activity.duration != null)
+    .map((activity) => {
+      const start = new Date(activity.startTime!);
+      return {
+        id: activity.id,
+        title: activity.title,
+        start,
+        end: getEndTime(start, activity.duration!),
+      };
+    });
+
+  for (let i = 0; i < timed.length; i++) {
+    for (let j = i + 1; j < timed.length; j++) {
+      const a = timed[i];
+      const b = timed[j];
+      if (a.start < b.end && b.start < a.end) {
+        partners.set(a.id, b.title);
+        partners.set(b.id, a.title);
+      }
+    }
+  }
+
+  return partners;
 }

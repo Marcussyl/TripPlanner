@@ -51,7 +51,7 @@ export default async function TripLayout({ children, params }: TripLayoutProps) 
           isOwner={isOwner}
         />
       </div>
-      <div className="flex min-h-screen flex-1 flex-col">{children}</div>
+      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
     </div>
   );
 }
